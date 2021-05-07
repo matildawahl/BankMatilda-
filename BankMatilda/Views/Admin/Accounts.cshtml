@@ -1,0 +1,18 @@
+﻿@*@model BankMatilda.Models.TransactionsViewModel
+@{
+    ViewData["Title"] = "Admin Page - transactions";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Welcome</h1>
+    <partial name="_SideBarPartial" />
+
+    <h2>Latest transactions</h2>
+    @foreach (var transations in Model.Transactions)
+    {
+        <p>@transations.AccountId</p>
+        <p>@transations.Date</p>
+        <p>@transations.TransactionId</p>
+    }
+</div>*@

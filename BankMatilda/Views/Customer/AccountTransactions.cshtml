@@ -1,0 +1,39 @@
+﻿@model BankMatilda.Models.TransactionsViewModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-5 mb-lg-0">
+            <div class="card-header">
+                <h2 class="h6 mb-0 text-uppercase">Transaktioner för konto: @Model.AccountId</h2>
+                <a asp-controller="Customer" asp-action="Index" asp-route-Id="@Model.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Tillbaka</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Account Id</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Balance</th>
+                            <th scope="col">Bank</th>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ddd in Model.Transactions)
+                        {
+            <tr>
+                <td>@ddd.AccountId</td>
+                <td>@ddd.Amount</td>
+                <td>@ddd.Balance</td>
+                <td>@ddd.Bank</td>
+                <td>@ddd.Symbol</td>
+                <td>@ddd.Operation</td>
+            </tr>}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

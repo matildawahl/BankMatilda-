@@ -1,0 +1,66 @@
+﻿@model BankMatilda.Models.CustomerViewModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-5 mb-lg-0">
+            <div class="card-header">
+                <h2 class="h6 mb-0 text-uppercase">VALD KUND: @Model.Givenname</h2>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row">
+                    <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-violet">
+                        <p>@Model.Emailaddress</p>
+                    </div>
+                    <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-green">
+                        <p>@Model.Streetaddress</p>
+                    </div>
+                    <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-green">
+                        <p>@Model.Country</p>
+                    </div>
+                    <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-green">
+                        <p>@Model.Birthday</p>
+                    </div>
+                    <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-green">
+                        <p>@Model.City</p>
+                    </div>
+                </div>
+                <div class="col-lg-12 mb-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h6 text-uppercase mb-0">Accounts</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Account Id</th>
+                                        <th scope="col">Balance</th>
+                                        <th scope="col">Created</th>
+                                        <th scope="col">Frequency</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var depo in Model.Accounts)
+                                    {
+
+                        <tr onclick="location.href = '@Url.Action("AccountTransactions", "Customer", new { customerId=Model.CustomerId,accountId= depo.AccountId })'">
+
+                            @*<a asp-controller="Customer" asp-action="AccountTransactions" asp-route-customerId="@Model.CustomerId" asp-route-accountId="@depo.AccountId" class="btn btn-secondary active" role="button" aria-pressed="true"></a>*@
+                            <td>@depo.AccountId</td>
+
+
+                            <td>@depo.Balance</td>
+                            <td>@depo.Created</td>
+                            <td>@depo.Frequency</td>
+                        </tr>}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Customer" asp-action="EditCustomer" asp-route-Id="@Model.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>

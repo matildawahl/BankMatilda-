@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    string activeController = "";
+    if (ViewContext.RouteData.Values["Controller"] != null)
+    {
+        activeController = ViewContext.RouteData.Values["Controller"].ToString();
+    }
+}
+<li class="nav-item">
+    @*TODO add current page == active*@
+    @*<a class="nav-link @(activeController == "Home" ? " active" : "")" asp-controller="Admin" asp-action="Customers" title="Manage">Customers</a>*@
+    <a class="nav-link" asp-controller="Admin" asp-action="Customers" title="Manage">Customers</a>
+</li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Admin" asp-action="Transactions" title="Manage">Transactions</a>
+    </li>
+

@@ -1,4 +1,4 @@
-﻿@model BankMatilda.Models.CustomersViewModel
+﻿@model BankMatilda.Models.CustomerIndexViewModel
 @{ ViewData["Title"] = "Admin Page - Customers"; }
 
 <div class="row">
@@ -14,32 +14,26 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Givenname</th>
-                            <th scope="col">Birthday</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">National ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
                             <th scope="col">City</th>
-                            <th scope="col">Emailaddress</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Streetaddress</th>
-                            <th scope="col">Telephonenumber</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var accounts in Model.Customer)
+                        @foreach (var customer in Model.Customers)
                         {
-            <tr>
-                <td>@accounts.Givenname</td>
-                <td>@accounts.Birthday</td>
-                <td>
-                    @accounts.City
-                </td>
-                <td>@accounts.Emailaddress</td>
-                <td>@accounts.Gender</td>
-                <td>@accounts.Streetaddress</td>
-                <td>@accounts.Telephonenumber</td>
-                <td><a asp-controller="Customer" asp-action="ViewCustomer" asp-route-Id="@accounts.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">View customer</a></td>
-                <td><a asp-controller="Customer" asp-action="EditCustomer" asp-route-Id="@accounts.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Edit</a></td>
-            </tr>
-}
+                                <tr>
+                                    <td>@customer.CustomerId</td>
+                                    <td>@customer.NationalId</td>
+                                    <td>@customer.Givenname @customer.Surname</td>
+                                    <td>@customer.Streetaddress @customer.Zipcode</td>
+                                    <td>@customer.City</td>
+                                    <td><a asp-controller="Customer" asp-action="Details" asp-route-Id="@customer.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">View customer</a></td>
+                                    <td><a asp-controller="Customer" asp-action="EditCustomer" asp-route-Id="@customer.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Edit</a></td>
+                                </tr>
+                        }
                     </tbody>
                 </table>
 

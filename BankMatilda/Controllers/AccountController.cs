@@ -20,7 +20,7 @@ namespace BankMatilda.Controllers
             _context = context;
         }
         
-        public IActionResult Account()
+        public IActionResult Index()
         {
             var viewModel = new AccountViewModel();
             viewModel.AccountList = _context.Accounts.Take(1000)

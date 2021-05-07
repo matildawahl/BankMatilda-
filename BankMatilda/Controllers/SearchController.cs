@@ -21,11 +21,11 @@ namespace BankMatilda.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Index(string q)
         {
-            var viewModel = new CustomerViewModel();
-            var customer = _context.Customers.First(x => x.City == q || x.Givenname == q);
+            var viewModel = new CustomerIndexViewModel();
+            //var customer = _context.Customers.First(x => x.City == q || x.Givenname == q);
 
-            viewModel.City = customer.City;
-            viewModel.Givenname = customer.Givenname;
+            //viewModel.City = customer.City;
+            //viewModel.Givenname = customer.Givenname;
 
             return View(viewModel);
         }

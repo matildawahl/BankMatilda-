@@ -1,4 +1,5 @@
 using BankMatilda.Data;
+using BankMatilda.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -21,9 +22,12 @@ namespace BankMatilda
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IRepository, Repository>();
+
             services.AddDbContext<BankAppDataContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

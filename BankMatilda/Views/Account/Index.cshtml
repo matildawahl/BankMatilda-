@@ -2,3 +2,43 @@
 @{
     ViewData["Title"] = "Admin Page";
 }
+
+<div class="row">
+    <div class="col-md-3">
+        <h1 class="display-4">Accounts</h1>
+    </div>
+    <div class="col-lg-12 mb-5">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="h6 text-uppercase mb-0">Customers</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Account ID</th>
+                        <th scope="col">Balance</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Loans</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var account in Model.AccountList)
+                    {
+                        <tr>
+                            <td>@account.AccountId</td>
+                            <td>@account.Balance</td>
+                            <td>@account.Created</td>
+                            <td>@account.Loans</td>
+                           
+                        
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

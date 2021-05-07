@@ -1,37 +1,35 @@
-﻿using BankMatilda.Models;
+﻿using System;
+using BankMatilda.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using BankMatilda.Data;
+using BankMatilda.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BankMatilda.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ILogger<CustomerController> _logger;
-        private readonly BankAppDataContext _context;
-        public CustomerController(ILogger<CustomerController> logger, BankAppDataContext context)
+        private readonly IRepository _repository;
+        public CustomerController(IRepository repository)
         {
-            _logger = logger;
-            _context = context;
+            _repository = repository;
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Index(int id)
         {
-            var viewModel = new CustomersViewModel();
-            viewModel.Customer = _context.Customers.Take(10)
-                .Select(person => new CustomerViewModel()
+            var viewModel = new CustomerIndexViewModel();
+            viewModel.Customers = _repository.GetCustomers().Take(10)
+                .Select(person => new CustomerIndexViewModel.CustomerViewModel()
                 {
                     Givenname = person.Givenname,
                     CustomerId = person.CustomerId,
-                    Birthday = person.Birthday,
                     City = person.City,
-                    Emailaddress = person.Emailaddress,
-                    Gender = person.Gender,
                     Streetaddress = person.Streetaddress,
-                    Telephonenumber = person.Telephonenumber
+                    NationalId = person.NationalId,
+                    Surname = person.Surname,
+                    Zipcode = person.Zipcode
 
                 }).ToList();
 
@@ -39,20 +37,39 @@ namespace BankMatilda.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult ViewCustomer(int id)
+        public IActionResult Details(int id)
         {
-            var viewModel = new CustomerViewModel();
-            var customer = _context.Customers.First(r => r.CustomerId == id);
-            var accounts = _context.Dispositions.Where(y => y.CustomerId == customer.CustomerId).Select(xx => xx.Account).ToList();
+            var viewModel = new CustomerDetailsViewModel();
 
-            viewModel.Emailaddress = customer.Emailaddress;
-            viewModel.Givenname = customer.Givenname;
-            viewModel.Streetaddress = customer.Streetaddress;
-            viewModel.CustomerId = customer.CustomerId;
-            viewModel.Dispositions = customer.Dispositions;
-            viewModel.Accounts = accounts;
-            viewModel.Birthday = customer.Birthday;
-            viewModel.City = customer.City;
+            viewModel.Accounts = _repository.GetAccounts(id)
+                .Select(accounts => new CustomerDetailsViewModel.AccountViewModel()
+                {
+                   AccountId = accounts.AccountId,
+                   Balance = accounts.Balance,
+                   Created = accounts.Created,
+                   Frequency = accounts.Frequency
+
+                }).ToList();
+
+            viewModel.Customer = _repository.GetCustomer(id).Select(customers =>
+                new CustomerDetailsViewModel.CustomerViewModel()
+                {
+                    CustomerId = customers.CustomerId,
+                    City = customers.City,
+                    Givenname = customers.Givenname,
+                    Birthday = (DateTime)customers.Birthday,
+                    Surname = customers.Surname,
+                    Zipcode = customers.Zipcode,
+                    NationalId = customers.NationalId,
+                    Country = customers.Country,
+                    CountryCode = customers.CountryCode,
+                    Emailaddress = customers.Emailaddress,
+                    Gender = customers.Gender,
+                    Streetaddress = customers.Streetaddress,
+                    Telephonecountrycode = customers.Telephonecountrycode,
+                    Telephonenumber = customers.Telephonenumber
+                }).ToList();
+
 
             return View(viewModel);
         }
@@ -62,28 +79,28 @@ namespace BankMatilda.Controllers
         {
             var viewModel = new CustomerEditViewModel();
 
-            var customer = _context.Customers.First(r => r.CustomerId == id);
+            //var customer = _context.Customers.First(r => r.CustomerId == id);
 
-            viewModel.Emailaddress = customer.Emailaddress;
-            viewModel.Givenname = customer.Givenname;
-            viewModel.Streetaddress = customer.Streetaddress;
-            //Fält =----> viewModel.Streetaddress = customer.Streetaddress;
+            //viewModel.Emailaddress = customer.Emailaddress;
+            //viewModel.Givenname = customer.Givenname;
+            //viewModel.Streetaddress = customer.Streetaddress;
+            ////Fält =----> viewModel.Streetaddress = customer.Streetaddress;
             return View(viewModel);
         }
 
         [HttpPost]
         public IActionResult EditCustomer(int id, CustomerEditViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                var customer = _context.Customers.First(r => r.CustomerId == id);
-                customer.Givenname = viewModel.Givenname;
-                customer.Emailaddress = viewModel.Emailaddress;
-                customer.Streetaddress = viewModel.Streetaddress;
-                _context.SaveChanges();
-                //TODO ändra redrict
-                return RedirectToAction("Index");
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    var customer = _context.Customers.First(r => r.CustomerId == id);
+            //    customer.Givenname = viewModel.Givenname;
+            //    customer.Emailaddress = viewModel.Emailaddress;
+            //    customer.Streetaddress = viewModel.Streetaddress;
+            //    _context.SaveChanges();
+            //    //TODO ändra redrict
+            //    return RedirectToAction("Index");
+            //}
 
             return View(viewModel);
         }
@@ -93,23 +110,18 @@ namespace BankMatilda.Controllers
         public IActionResult AccountTransactions(int customerId,int accountId)
         {
             var viewModel = new TransactionsViewModel();
-            viewModel.Transactions = _context.Transactions.Where(x =>x.AccountId == accountId)
-                .Select(transaction => new TransactionViewModel()
-                {
-                    AccountId = transaction.AccountId,
-                    Date = transaction.Date,
-                    Operation = transaction.Operation,
-                    Amount = transaction.Amount,
-                    TransactionId = transaction.TransactionId,
-                    Balance = transaction.Balance,
-                    Symbol = transaction.Symbol,
-                    Bank = transaction.Bank
-                }).OrderByDescending(x=>x.Date).ToList();
+            //viewModel.Transactions = _repository.GetTransactions(customerId, accountId)
+            //    {
+                    
+                    
+                   
+            //    }).OrderByDescending(x=>x.Date).ToList();
 
-            viewModel.AccountId = accountId;
-            viewModel.CustomerId = customerId;
+            //viewModel.AccountId = accountId;
+            //viewModel.CustomerId = customerId;
 
             return View(viewModel);
         }
     }
 }
+

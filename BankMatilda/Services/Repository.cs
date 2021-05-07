@@ -34,5 +34,12 @@ namespace BankMatilda.Services
         {
             return _context.Transactions;
         }
+
+        public IEnumerable<Account> GetAllAccounts()
+        {
+            return _context.Accounts;
+        }
+
+
     }
 }

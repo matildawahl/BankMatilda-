@@ -8,14 +8,9 @@ namespace BankMatilda.Models
 {
     public class HomeIndexViewModel
     {
-
-       
-
         public int AccountId { get; set; }
         public int CustomerId { get; set; }
         public decimal Balance { get; set; }
-      
-
 
     }
 }

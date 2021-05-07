@@ -44,10 +44,10 @@ namespace BankMatilda.Controllers
             viewModel.Accounts = _repository.GetAccounts(id)
                 .Select(accounts => new CustomerDetailsViewModel.AccountViewModel()
                 {
-                   AccountId = accounts.AccountId,
-                   Balance = accounts.Balance,
-                   Created = accounts.Created,
-                   Frequency = accounts.Frequency
+                    AccountId = accounts.AccountId,
+                    Balance = accounts.Balance,
+                    Created = accounts.Created,
+                    Frequency = accounts.Frequency
 
                 }).ToList();
 
@@ -104,24 +104,26 @@ namespace BankMatilda.Controllers
 
             return View(viewModel);
         }
-        
+
         //Todo paginering = ladda in med js/ajax. Ta bort Take(100) sen
-        [Authorize(Roles = "Admin, Cashier")]
-        public IActionResult AccountTransactions(int customerId,int accountId)
-        {
-            var viewModel = new TransactionsViewModel();
-            //viewModel.Transactions = _repository.GetTransactions(customerId, accountId)
-            //    {
-                    
-                    
-                   
-            //    }).OrderByDescending(x=>x.Date).ToList();
 
-            //viewModel.AccountId = accountId;
-            //viewModel.CustomerId = customerId;
+        //public IActionResult AccountTransactions(int customerId, int accountId)
+        //{
+        //    var viewModel = new TransactionsViewModel();
+        //    viewModel.Transactions = _repository.GetTransactions(customerId, accountId)
+        //    {
 
-            return View(viewModel);
-        }
+
+
+        //    }).OrderByDescending(x => x.Date).ToList();
+
+        //    viewModel.AccountId = accountId;
+        //    viewModel.CustomerId = customerId;
+
+        //    return View(viewModel);
+        //}
     }
 }
+ 
+
 

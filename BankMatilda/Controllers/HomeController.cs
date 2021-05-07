@@ -4,36 +4,36 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using BankMatilda.Data;
+using BankMatilda.Services;
 
 namespace BankMatilda.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly BankAppDataContext _context;
-
-        public HomeController(ILogger<HomeController> logger, BankAppDataContext context)
+        private readonly IRepository _repository;
+        public HomeController(IRepository repository)
         {
-            _logger = logger;
-            _context = context;
+            _repository = repository;
         }
 
-        [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client, NoStore = true)]
+        [ResponseCache(Duration = 30, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index()
         {
             var viewModel = new HomeIndexViewModel();
-            viewModel.CustomerId = _context.Customers.Select(c => new HomeIndexViewModel
+            viewModel.CustomerId = _repository.GetCustomers().Select(c => new HomeIndexViewModel
             {
                 CustomerId = c.CustomerId
             }).Count();
 
-            viewModel.AccountId = _context.Accounts.Select(c => new HomeIndexViewModel
+            viewModel.AccountId = _repository.GetAllAccounts().Select(c => new HomeIndexViewModel
             {
                 AccountId = c.AccountId
             }).Count();
 
-            viewModel.Balance = _context.Accounts.Sum(c => c.Balance);
-           
+            var query = _repository.GetAllAccounts();
+            viewModel.Balance = query.Sum(c => c.Balance);
+
+
             return View(viewModel);
         }
 

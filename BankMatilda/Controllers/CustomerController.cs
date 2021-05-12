@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using BankMatilda.Data;
 using BankMatilda.Services;
+using JW;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BankMatilda.Controllers
@@ -17,11 +18,13 @@ namespace BankMatilda.Controllers
             _repository = repository;
         }
 
-        public IActionResult Index(int id)
+        public IActionResult Index(int id, int page=1)
         {
             var viewModel = new CustomerIndexViewModel();
-            viewModel.Customers = _repository.GetCustomers().Take(10)
-                .Select(person => new CustomerIndexViewModel.CustomerViewModel()
+            var totalCustomers = _repository.GetCustomers().Count();
+            var paging = new Pager(totalCustomers, page, 50, 10);
+            
+            viewModel.Customers = _repository.GetCustomers().Take(50).Skip((page -1)*50).Select(person => new CustomerIndexViewModel.CustomerViewModel()
                 {
                     Givenname = person.Givenname,
                     CustomerId = person.CustomerId,
@@ -32,6 +35,11 @@ namespace BankMatilda.Controllers
                     Zipcode = person.Zipcode
 
                 }).ToList();
+
+            viewModel.TotalPageCount = paging.TotalPages;
+            viewModel.DisplayPages = paging.Pages;
+            viewModel.CurrentPage = paging.CurrentPage;
+
 
             return View(viewModel);
         }

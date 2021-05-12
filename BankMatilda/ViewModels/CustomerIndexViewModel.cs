@@ -8,6 +8,9 @@ namespace BankMatilda.Models
     public class CustomerIndexViewModel
     {
         public List<CustomerViewModel> Customers { get; set; } = new List<CustomerViewModel>();
+        public int TotalPageCount { get; set; }
+        public IEnumerable<int> DisplayPages { get; set; }
+        public int CurrentPage { get; set; }
 
         public class CustomerViewModel
         {

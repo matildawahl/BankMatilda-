@@ -11,27 +11,20 @@ namespace BankMatilda.Controllers
 {
     public class TransactionsController : Controller
     {
-        private readonly IRepository _repository;
-        public TransactionsController(IRepository repository)
-        {
-            _repository = repository;
-        }
+        //private readonly IRepository _repository;
+        //public TransactionsController(IRepository repository)
+        //{
+        //    _repository = repository;
+        //}
 
-        [Authorize(Roles = "Admin")]
-        public IActionResult Index()
-        {
-            var viewModel = new TransactionsViewModel();
-            //viewModel.Transactions = _repository.GetAllAccounts()
-            //    .Select(transaction => new TransactionViewModel()
-            //    {
-            //        AccountId = transaction.AccountId,
-            //        Date = transaction.Date,
-            //        Operation = transaction.Operation,
-            //        Amount = transaction.Amount,
-            //        TransactionId = transaction.TransactionId
-            //    }).OrderByDescending(x => x.Date).ToList();
+        //[Authorize(Roles = "Admin")]
+        //public IActionResult Index()
+        //{
+        //    var viewModel = new TransactionsViewModel();
+        //    viewModel.Transactions = _repository.GetTransactions()
+          
 
-            return View(viewModel);
+        //    return View(viewModel);
         }
     }
-}
+

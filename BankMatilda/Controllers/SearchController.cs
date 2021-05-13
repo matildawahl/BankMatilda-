@@ -1,4 +1,5 @@
-﻿using BankMatilda.Models;
+﻿using System.Collections.Generic;
+using BankMatilda.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -20,11 +21,19 @@ namespace BankMatilda.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Index(string q)
         {
-            var viewModel = new CustomerIndexViewModel.CustomerViewModel();
-            var customer = _repository.GetCustomers().First(x => x.City == q || x.Givenname == q);
+            var viewModel = new CustomerIndexViewModel();
 
-            viewModel.City = customer.City;
-            viewModel.Givenname = customer.Givenname;
+            viewModel.Customers = _repository.GetCustomers().Where(x => x.City.ToLower() == q.ToLower() || x.Givenname.ToLower() == q.ToLower()).Select(customer => new CustomerIndexViewModel.CustomerViewModel()
+            {
+                City = customer.City,
+                Givenname = customer.Givenname,
+                CustomerId = customer.CustomerId,
+                Streetaddress = customer.Streetaddress,
+                NationalId = customer.NationalId,
+                Surname = customer.Surname,
+                Zipcode = customer.Zipcode
+                
+            }).ToList();
 
             return View(viewModel);
         }

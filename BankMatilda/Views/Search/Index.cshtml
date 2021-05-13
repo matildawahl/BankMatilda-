@@ -1,19 +1,35 @@
-﻿@*@model BankMatilda.Models.CustomerIndexViewModel
-@{
-    ViewData["Title"] = "Transations Page";
-}
+﻿@model BankMatilda.Models.CustomerIndexViewModel
+    @{
+        ViewData["Title"] = "Search Page";
+    }
 
-<section class="py-5">
-    <div class="col-md-3">
-        <h1 class="display-4">Search</h1>
-        <ul class="nav nav-pills flex-column">
-        </ul>
+    <section class="py-5">
+        <div class="col-md-3">
+            <h1 class="display-4">Search</h1>
+            <ul class="nav nav-pills flex-column">
+            </ul>
 
 
-    </div>
-    <div class="col-lg-12 mb-5">
-        <p>@Model.City</p>
-        <p>@Model.Givenname</p>
-    </div>
+        </div>
+        <table class="table">
+            <tbody>
+            @foreach (var item in Model.Customers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Givenname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Streetaddress)
+                    </td>
+                    <td><a asp-controller="Customer" asp-action="Details" asp-route-Id="@item.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">View customer</a></td>
+                    <td><a asp-controller="Customer" asp-action="EditCustomer" asp-route-Id="@item.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Edit</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
 
-</section>*@
+    </section>

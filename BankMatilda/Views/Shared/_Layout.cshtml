@@ -119,7 +119,7 @@
                             <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Sök efter kund..."
                                    aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-dark" type="button">
+                                <button asp-controller="Search" asp-action="Index" class="btn btn-dark" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -173,9 +173,8 @@
 
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                            <button type="submit" class="btn btn-dark">Logout</button>
                         </form>
                     </a>
                 </div>

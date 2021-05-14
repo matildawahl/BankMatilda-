@@ -18,7 +18,7 @@ namespace BankMatilda.Controllers
             _repository = repository;
         }
 
-        [Authorize(Roles = "Admin")]
+        
         public IActionResult Index(string q)
         {
             var viewModel = new CustomerIndexViewModel();

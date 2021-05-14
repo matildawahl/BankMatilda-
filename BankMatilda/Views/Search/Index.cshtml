@@ -17,13 +17,16 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.City)
+                        @item.City
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Givenname)
+                        @item.Givenname @item.Surname
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Streetaddress)
+                        @item.Streetaddress
+                    </td>
+                    <td>
+                        @item.City
                     </td>
                     <td><a asp-controller="Customer" asp-action="Details" asp-route-Id="@item.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">View customer</a></td>
                     <td><a asp-controller="Customer" asp-action="EditCustomer" asp-route-Id="@item.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Edit</a></td>

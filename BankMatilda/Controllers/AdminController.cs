@@ -24,5 +24,10 @@ namespace BankMatilda.Controllers
             var viewModel = new AdminViewModel();
             return View(viewModel);
         }
+
+        public IActionResult New()
+        {
+            return View(); 
+        }
     }
 }

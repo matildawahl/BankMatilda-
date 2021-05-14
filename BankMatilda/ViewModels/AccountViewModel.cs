@@ -10,6 +10,9 @@ namespace BankMatilda.Models
 {
     public partial class AccountViewModel
     {
+        public int TotalPageCount { get; set; }
+        public IEnumerable<int> DisplayPages { get; set; }
+        public int CurrentPage { get; set; }
         public List<Accounts> AccountList { get; set; } = new List<Accounts>();
 
         public class Accounts

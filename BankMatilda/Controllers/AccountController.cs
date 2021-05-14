@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BankMatilda.Data;
 using BankMatilda.Models;
 using BankMatilda.Services;
+using JW;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 
@@ -19,19 +20,35 @@ namespace BankMatilda.Controllers
             _repository = repository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
             var viewModel = new AccountViewModel();
-            viewModel.AccountList = _repository.GetAllAccounts()
-                .Select(person => new AccountViewModel.Accounts()
-                {
-                    AccountId = person.AccountId,
-                    Balance = person.Balance,
-                    Frequency = person.Frequency,
-                    Created = person.Created
+            var totalAccounts = _repository.GetAllAccounts().Count();
+            var paging = new Pager(totalAccounts, page, 50, 10);
+            var skip = CalculateHowManyAccountsToSkip(page, 50);
+
+            viewModel.AccountList = _repository.GetAllAccounts().Skip(skip).Take(50).Select(account => new AccountViewModel.Accounts()
+            {
+                    AccountId = account.AccountId,
+                    Balance = account.Balance,
+                    Frequency = account.Frequency,
+                    Created = account.Created
                 }).ToList();
 
-            return View(viewModel); 
+
+
+            return View(viewModel);
+
+            viewModel.TotalPageCount = paging.TotalPages;
+            viewModel.DisplayPages = paging.Pages;
+            viewModel.CurrentPage = paging.CurrentPage;
         }
+
+        private int CalculateHowManyAccountsToSkip(int page, int pageSize)
+        {
+            return (page - 1) * pageSize;
+        }
+
     }
 }
+

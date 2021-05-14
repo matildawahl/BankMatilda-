@@ -18,13 +18,15 @@ namespace BankMatilda.Controllers
             _repository = repository;
         }
 
-        public IActionResult Index(int id, int page=1)
+        public IActionResult Index(int page=1)
         {
             var viewModel = new CustomerIndexViewModel();
             var totalCustomers = _repository.GetCustomers().Count();
             var paging = new Pager(totalCustomers, page, 50, 10);
-            
-            viewModel.Customers = _repository.GetCustomers().Take(50).Skip((page -1)*50).Select(person => new CustomerIndexViewModel.CustomerViewModel()
+            var skip = CalculateHowManyCustomersToSkip(page, 50);
+
+
+            viewModel.Customers = _repository.GetCustomers().Skip(skip).Take(50).Select(person => new CustomerIndexViewModel.CustomerViewModel()
                 {
                     Givenname = person.Givenname,
                     CustomerId = person.CustomerId,
@@ -44,7 +46,12 @@ namespace BankMatilda.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "Admin")]
+        private int CalculateHowManyCustomersToSkip(int page, int pageSize)
+        {
+            return (page - 1) * pageSize;
+        }
+
+
         public IActionResult Details(int id)
         {
             var viewModel = new CustomerDetailsViewModel();

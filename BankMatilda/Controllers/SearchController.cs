@@ -23,7 +23,7 @@ namespace BankMatilda.Controllers
         {
             var viewModel = new CustomerIndexViewModel();
 
-            viewModel.Customers = _repository.GetCustomers().Where(x => x.City.ToLower() == q.ToLower() || x.Givenname.ToLower() == q.ToLower()).Select(customer => new CustomerIndexViewModel.CustomerViewModel()
+            viewModel.Customers = _repository.GetCustomers().Where(x => x.City.ToLower().Contains(q) || x.Givenname.ToLower().Contains(q)).Select(customer => new CustomerIndexViewModel.CustomerViewModel()
             {
                 City = customer.City,
                 Givenname = customer.Givenname,

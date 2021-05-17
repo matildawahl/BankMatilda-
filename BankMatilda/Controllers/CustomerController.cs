@@ -52,11 +52,11 @@ namespace BankMatilda.Controllers
         }
 
 
-        public IActionResult Details(int id)
+        public IActionResult Details(string id)
         {
             var viewModel = new CustomerDetailsViewModel();
 
-            viewModel.Accounts = _repository.GetAccounts(id)
+            viewModel.Accounts = _repository.GetAccounts(int.Parse(id))
                 .Select(accounts => new CustomerDetailsViewModel.AccountViewModel()
                 {
                     AccountId = accounts.AccountId,
@@ -66,7 +66,7 @@ namespace BankMatilda.Controllers
 
                 }).ToList();
 
-            viewModel.Customer = _repository.GetCustomer(id).Select(customers =>
+            viewModel.Customer = _repository.GetCustomer(int.Parse(id)).Select(customers =>
                 new CustomerDetailsViewModel.CustomerViewModel()
                 {
                     CustomerId = customers.CustomerId,
@@ -88,6 +88,7 @@ namespace BankMatilda.Controllers
 
             return View(viewModel);
         }
+
 
         [Authorize(Roles = "Admin,Cashier")]
         public IActionResult EditCustomer(int id)

@@ -12,7 +12,9 @@ namespace BankMatilda.Services
         public IEnumerable<Account> GetAccounts(int id);
         public IEnumerable<Customer> GetCustomer(int id);
         public IEnumerable<Transaction> GetTransactions(int customerId, int accountId);
-        public IEnumerable<Account> GetAllAccounts(); 
+        public IEnumerable<Account> GetAllAccounts();
+        public IEnumerable<Transaction> GetAllTransactions();
+        public void CreateTransaction(string id, decimal amount);
 
 
     }

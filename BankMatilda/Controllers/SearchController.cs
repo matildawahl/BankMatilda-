@@ -18,12 +18,12 @@ namespace BankMatilda.Controllers
             _repository = repository;
         }
 
-        
         public IActionResult Index(string q)
         {
             var viewModel = new CustomerIndexViewModel();
 
-            viewModel.Customers = _repository.GetCustomers().Where(x => x.City.ToLower().Contains(q) || x.Givenname.ToLower().Contains(q)).Select(customer => new CustomerIndexViewModel.CustomerViewModel()
+            var query = q.ToLower();
+            viewModel.Customers = _repository.GetCustomers().Where(x => x.City.ToLower().Contains(query) || x.Givenname.ToLower().Contains(query)).Select(customer => new CustomerIndexViewModel.CustomerViewModel()
             {
                 City = customer.City,
                 Givenname = customer.Givenname,

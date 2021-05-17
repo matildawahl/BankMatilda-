@@ -27,7 +27,7 @@ namespace BankMatilda.Services
 
         public IEnumerable<Customer> GetCustomer(int id)
         {
-            return _context.Customers.Where(c => c.CustomerId == id); 
+            return _context.Customers.Where(c => c.CustomerId == id);
         }
 
         public IEnumerable<Transaction> GetTransactions(int customerId, int accountId)
@@ -40,6 +40,18 @@ namespace BankMatilda.Services
             return _context.Accounts;
         }
 
+        public IEnumerable<Transaction> GetAllTransactions()
+        {
+            return _context.Transactions;
+        }
 
+        public void CreateTransaction(string id, decimal amount)
+        {
+            var trans = new Transaction();
+            _context.Transactions.Add(trans);
+            trans.Amount = amount;
+            trans.TransactionId = 123;
+            _context.SaveChanges();
+        }
     }
 }

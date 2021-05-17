@@ -20,7 +20,7 @@ namespace BankMatilda.Controllers
             _repository = repository;
         }
 
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page = 1)
         {
             var viewModel = new AccountViewModel();
             var totalAccounts = _repository.GetAllAccounts().Count();
@@ -29,19 +29,18 @@ namespace BankMatilda.Controllers
 
             viewModel.AccountList = _repository.GetAllAccounts().Skip(skip).Take(50).Select(account => new AccountViewModel.Accounts()
             {
-                    AccountId = account.AccountId,
-                    Balance = account.Balance,
-                    Frequency = account.Frequency,
-                    Created = account.Created
-                }).ToList();
+                AccountId = account.AccountId,
+                Balance = account.Balance,
+                Frequency = account.Frequency,
+                Created = account.Created
+            }).ToList();
 
-
-
-            return View(viewModel);
 
             viewModel.TotalPageCount = paging.TotalPages;
             viewModel.DisplayPages = paging.Pages;
             viewModel.CurrentPage = paging.CurrentPage;
+
+            return View(viewModel);
         }
 
         private int CalculateHowManyAccountsToSkip(int page, int pageSize)

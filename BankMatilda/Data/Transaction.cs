@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankMatilda.Data
 {
-    [Index(nameof(AccountId), Name = "IX_Transactions_AccountId")]
+    
     public partial class Transaction
     {
         [Key]

@@ -7,8 +7,8 @@ namespace BankMatilda.Models
 {
     public class CustomerDetailsViewModel
     {
-        public List<CustomerViewModel> Customer { get; set; } = new List<CustomerViewModel>();
-        public List<AccountViewModel> Accounts { get; set; } = new List<AccountViewModel>();
+        public CustomerViewModel Customer { get; set; }
+        public AccountViewModel Account { get; set; }
 
         public class CustomerViewModel
         {

@@ -1,4 +1,5 @@
-﻿using BankMatilda.Models;
+﻿using System.Collections.Generic;
+using BankMatilda.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -32,6 +33,9 @@ namespace BankMatilda.Controllers
 
             var query = _repository.GetAllAccounts();
             viewModel.Balance = query.Sum(c => c.Balance);
+
+            
+            viewModel.LargestAccount = _repository.GetAll().OrderByDescending(b => b.Account.Balance).Select(t => t.Account.Balance).FirstOrDefault();
 
 
             return View(viewModel);

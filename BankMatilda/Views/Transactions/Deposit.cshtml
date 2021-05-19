@@ -1,0 +1,17 @@
+﻿@model BankMatilda.ViewModels.TransactionDepositViewModel
+@{
+    ViewData["Title"] = "Admin Page";
+}
+
+<form asp-controller="Transactions" asp-action="Deposit" method="post">
+    <label for="fname">Account Number:</label><br>
+    <input asp-for="AccountId" id="fname"><br>
+    <span asp-validation-for="AccountId"></span>
+
+    <label for="lname">Amount:</label><br>
+    <input asp-for="AmountToDeposit" id="lname">
+    <span asp-validation-for="AmountToDeposit"></span>
+
+    <button class="btn btn-dark" type="submit">Proceed</button>
+</form>
+

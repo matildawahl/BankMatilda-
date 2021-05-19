@@ -25,19 +25,18 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var customer in Model.Customer)
-            {
+                @Model.
                 <tr>
-                    <td>@customer.CustomerId</td>
-                    <td>@customer.NationalId</td>
-                    <td>@customer.Gender</td>
-                    <td>@customer.Birthday.ToString("yyyy-MM-dd")</td>
-                    <td>@customer.Givenname @customer.Surname</td>
-                    <td>@customer.Streetaddress <br/> @customer.Zipcode @customer.City</td>
-                    <td>@customer.CountryCode @customer.Country</td>
-                    <td>@customer.Emailaddress</td>
-                    <td>@customer.Telephonecountrycode @customer.Telephonenumber</td>
-                </tr>}
+                    <td>@Model.Customer.CustomerId</td>
+                    <td>@Model.Customer.NationalId</td>
+                    <td>@Model.Customer.Gender</td>
+                    <td>@Model.Customer.Birthday.ToString("yyyy-MM-dd")</td>
+                    <td>@Model.Customer.Givenname @Model.Customer.Surname</td>
+                    <td>@Model.Customer.Streetaddress <br/> @Model.Customer.Zipcode @Model.Customer.City</td>
+                    <td>@Model.Customer.CountryCode @Model.Customer.Country</td>
+                    <td>@Model.Customer.Emailaddress</td>
+                    <td>@Model.Customer.Telephonecountrycode @Model.Customer.Telephonenumber</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -59,14 +58,13 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var accounts in Model.Accounts)
-            {
+            
                 <tr>
-                    <td>@accounts.AccountId</td>
-                    <td>@accounts.Balance</td>
-                    <td>@accounts.Created.ToString("yyyy-MM-dd")</td>
-                    <td>@accounts.Frequency</td>
-                </tr>}
+                    <td>@Model.Account.AccountId</td>
+                    <td>@Model.Account.Balance</td>
+                    <td>@Model.Account.Created.ToString("yyyy-MM-dd")</td>
+                    <td>@Model.Account.Frequency</td>
+                </tr>
             </tbody>
         </table>
     </div>

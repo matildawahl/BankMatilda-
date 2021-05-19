@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankMatilda.Services
 {
@@ -15,9 +16,9 @@ namespace BankMatilda.Services
             _context = Context;
         }
 
-        public IEnumerable<Account> GetAccounts(int id)
+        public Account GetAccountById(int id)
         {
-            return _context.Accounts.Where(a => a.AccountId == id);
+            return _context.Accounts.FirstOrDefault(a => a.AccountId == id);
         }
 
         public IEnumerable<Customer> GetCustomers()
@@ -25,12 +26,12 @@ namespace BankMatilda.Services
             return _context.Customers;
         }
 
-        public IEnumerable<Customer> GetCustomer(int id)
+        public Customer GetCustomer(int id)
         {
-            return _context.Customers.Where(c => c.CustomerId == id);
+            return _context.Customers.FirstOrDefault(c => c.CustomerId == id);
         }
 
-        public IEnumerable<Transaction> GetTransactions(int customerId, int accountId)
+        public IQueryable<Transaction> GetTransactions(int customerId, int accountId)
         {
             return _context.Transactions;
         }
@@ -40,7 +41,7 @@ namespace BankMatilda.Services
             return _context.Accounts;
         }
 
-        public IEnumerable<Transaction> GetAllTransactions()
+        public IQueryable<Transaction> GetAllTransactions()
         {
             return _context.Transactions;
         }
@@ -50,8 +51,23 @@ namespace BankMatilda.Services
             var trans = new Transaction();
             _context.Transactions.Add(trans);
             trans.Amount = amount;
-            trans.TransactionId = 123;
+            trans.TransactionId = Int32.Parse(id);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Disposition> GetAll()
+        {
+            return _context.Dispositions.Include(a => a.Account).Include(c => c.Customer);
+
+        }
+
+        public Account UpdateAccount(Account account)
+        {
+            _context.Update(account);
+            _context.SaveChanges();
+            return account;
+        }
+
+       
     }
 }

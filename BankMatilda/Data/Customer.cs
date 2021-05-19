@@ -42,7 +42,7 @@ namespace BankMatilda.Data
         [StringLength(2)]
         public string CountryCode { get; set; }
         [Column(TypeName = "date")]
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         [StringLength(20)]
         public string NationalId { get; set; }
         [StringLength(10)]

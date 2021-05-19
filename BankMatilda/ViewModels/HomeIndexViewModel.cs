@@ -11,6 +11,7 @@ namespace BankMatilda.Models
         public int AccountId { get; set; }
         public int CustomerId { get; set; }
         public decimal Balance { get; set; }
+        public decimal LargestAccount { get; set; }
 
     }
 }

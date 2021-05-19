@@ -13,12 +13,13 @@ namespace BankMatilda.Controllers
     public class CustomerController : Controller
     {
         private readonly IRepository _repository;
+
         public CustomerController(IRepository repository)
         {
             _repository = repository;
         }
 
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page = 1)
         {
             var viewModel = new CustomerIndexViewModel();
             var totalCustomers = _repository.GetCustomers().Count();
@@ -26,7 +27,8 @@ namespace BankMatilda.Controllers
             var skip = CalculateHowManyCustomersToSkip(page, 50);
 
 
-            viewModel.Customers = _repository.GetCustomers().Skip(skip).Take(50).Select(person => new CustomerIndexViewModel.CustomerViewModel()
+            viewModel.Customers = _repository.GetCustomers().Skip(skip).Take(50).Select(person =>
+                new CustomerIndexViewModel.CustomerViewModel()
                 {
                     Givenname = person.Givenname,
                     CustomerId = person.CustomerId,
@@ -52,94 +54,79 @@ namespace BankMatilda.Controllers
         }
 
 
-        public IActionResult Details(string id)
+        public IActionResult Details(int id)
         {
             var viewModel = new CustomerDetailsViewModel();
+            var account = _repository.GetAccountById(id);
+            viewModel.Account = new CustomerDetailsViewModel.AccountViewModel
+            {
+                    AccountId = account.AccountId,
+                    Balance = account.Balance,
+                    Created = account.Created,
+                    Frequency = account.Frequency
+            };
 
-            viewModel.Accounts = _repository.GetAccounts(int.Parse(id))
-                .Select(accounts => new CustomerDetailsViewModel.AccountViewModel()
-                {
-                    AccountId = accounts.AccountId,
-                    Balance = accounts.Balance,
-                    Created = accounts.Created,
-                    Frequency = accounts.Frequency
-
-                }).ToList();
-
-            viewModel.Customer = _repository.GetCustomer(int.Parse(id)).Select(customers =>
-                new CustomerDetailsViewModel.CustomerViewModel()
-                {
-                    CustomerId = customers.CustomerId,
-                    City = customers.City,
-                    Givenname = customers.Givenname,
-                    Birthday = (DateTime)customers.Birthday,
-                    Surname = customers.Surname,
-                    Zipcode = customers.Zipcode,
-                    NationalId = customers.NationalId,
-                    Country = customers.Country,
-                    CountryCode = customers.CountryCode,
-                    Emailaddress = customers.Emailaddress,
-                    Gender = customers.Gender,
-                    Streetaddress = customers.Streetaddress,
-                    Telephonecountrycode = customers.Telephonecountrycode,
-                    Telephonenumber = customers.Telephonenumber
-                }).ToList();
+            var customer = _repository.GetCustomer(id);
+            viewModel.Customer = new CustomerDetailsViewModel.CustomerViewModel()
+            {
+                CustomerId = customer.CustomerId,
+                City = customer.City,
+                Givenname = customer.Givenname,
+                Birthday = customer.Birthday,
+                Surname = customer.Surname,
+                Zipcode = customer.Zipcode,
+                NationalId = customer.NationalId,
+                Country = customer.Country,
+                CountryCode = customer.CountryCode,
+                Emailaddress = customer.Emailaddress,
+                Gender = customer.Gender,
+                Streetaddress = customer.Streetaddress,
+                Telephonecountrycode = customer.Telephonecountrycode,
+                Telephonenumber = customer.Telephonenumber
+            };
 
 
             return View(viewModel);
         }
+    }
+}
 
 
-        [Authorize(Roles = "Admin,Cashier")]
-        public IActionResult EditCustomer(int id)
-        {
-            var viewModel = new CustomerEditViewModel();
-
-            //var customer = _context.Customers.First(r => r.CustomerId == id);
-
-            //viewModel.Emailaddress = customer.Emailaddress;
-            //viewModel.Givenname = customer.Givenname;
-            //viewModel.Streetaddress = customer.Streetaddress;
-            ////Fält =----> viewModel.Streetaddress = customer.Streetaddress;
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public IActionResult EditCustomer(int id, CustomerEditViewModel viewModel)
-        {
-            //if (ModelState.IsValid)
-            //{
-            //    var customer = _context.Customers.First(r => r.CustomerId == id);
-            //    customer.Givenname = viewModel.Givenname;
-            //    customer.Emailaddress = viewModel.Emailaddress;
-            //    customer.Streetaddress = viewModel.Streetaddress;
-            //    _context.SaveChanges();
-            //    //TODO ändra redrict
-            //    return RedirectToAction("Index");
-            //}
-
-            return View(viewModel);
-        }
-
-        //Todo paginering = ladda in med js/ajax. Ta bort Take(100) sen
-
-        //public IActionResult AccountTransactions(int customerId, int accountId)
+//[Authorize(Roles = "Admin,Cashier")]
+        //public IActionResult EditCustomer(int id)
         //{
-        //    var viewModel = new TransactionsViewModel();
-        //    viewModel.Transactions = _repository.GetTransactions(customerId, accountId)
-        //    {
+        //    var viewModel = new CustomerEditViewModel();
 
+        //    //var customer = _context.Customers.First(r => r.CustomerId == id);
 
+        //    //viewModel.Emailaddress = customer.Emailaddress;
+        //    //viewModel.Givenname = customer.Givenname;
+        //    //viewModel.Streetaddress = customer.Streetaddress;
+        //    ////Fält =----> viewModel.Streetaddress = customer.Streetaddress;
+        //    return View(viewModel);
+        //}
 
-        //    }).OrderByDescending(x => x.Date).ToList();
-
-        //    viewModel.AccountId = accountId;
-        //    viewModel.CustomerId = customerId;
+        //[HttpPost]
+        //public IActionResult EditCustomer(int id, CustomerEditViewModel viewModel)
+        //{
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //    var customer = _context.Customers.First(r => r.CustomerId == id);
+        //    //    customer.Givenname = viewModel.Givenname;
+        //    //    customer.Emailaddress = viewModel.Emailaddress;
+        //    //    customer.Streetaddress = viewModel.Streetaddress;
+        //    //    _context.SaveChanges();
+        //    //    //TODO ändra redrict
+        //    //    return RedirectToAction("Index");
+        //    //}
 
         //    return View(viewModel);
         //}
-    }
-}
- 
+
+        //Todo paginering = ladda in med js/ajax. Ta bort Take(100) sen
+
+
+
+
 
 

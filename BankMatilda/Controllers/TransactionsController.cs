@@ -1,12 +1,15 @@
-﻿using BankMatilda.Models;
+﻿using System;
+using BankMatilda.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using BankMatilda.Data;
 using BankMatilda.Services;
+using BankMatilda.ViewModels;
 using JW;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace BankMatilda.Controllers
 {
@@ -49,13 +52,65 @@ namespace BankMatilda.Controllers
             return (page - 1) * pageSize;
         }
 
-        public IActionResult CreateTransaction(string accountId,  decimal amount)
+        public IActionResult Transfer(int accountId, decimal amount)
         {
-
-            _repository.CreateTransaction(accountId, 99.00M);
-
-            return null;
+            var viewModel = new TransactionTransferViewModel();
+            return View(viewModel);
         }
+
+        public IActionResult Withdraw(int accountId, decimal amount)
+        {
+            var viewModel = new TransactionWithdrawViewModel();
+            return View(viewModel);
+        }
+
+        public IActionResult Deposit()
+        {
+            var viewModel = new TransactionDepositViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Deposit(TransactionDepositViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var trans = new Transaction();
+                var account = _repository.GetAccountById(viewModel.AccountId);
+
+                trans.Balance = account.Balance + viewModel.AmountToDeposit;
+                trans.AccountId = account.AccountId;
+                trans.Date = DateTime.Now.Date;
+                trans.Operation = "Credit in Cash";
+                trans.Type = "Credit";
+                trans.Symbol = "";
+                trans.Amount = viewModel.AmountToDeposit;
+                trans.AccountNavigation = account;
+
+                account.Balance += viewModel.AmountToDeposit;
+                account.Transactions.Add(trans);
+
+                _repository.UpdateAccount(account);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(viewModel);
+        }
+
+        public JsonResult CheckAccountId(int AccountId)
+        {
+                var account = _repository.GetAccountById(AccountId);
+            if (account != null)
+            {
+                return Json(true);
+            }
+
+            return Json("Invalid AccountId");
+        }
+
     }
+
 }
 

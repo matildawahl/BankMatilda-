@@ -1,0 +1,13 @@
+﻿@model BankMatilda.ViewModels.TransactionWithdrawViewModel
+@{
+    ViewData["Title"] = "Admin Page";
+}
+
+<form asp-controller="Transactions" asp-action="Withdraw">
+    <label for="fname">Account Number:</label><br>
+    <input asp-for="AccountId" type="text" id="fname" name="fname"><br>
+    <span asp-validation-for="AccountId"></span>
+    <label for="lname">Amount:</label><br>
+    <input asp-for="AmountToWithdraw" type="text" id="lname" name="lname">
+    <span asp-validation-for="AmountToWithdraw"></span>
+</form>

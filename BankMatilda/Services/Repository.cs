@@ -62,6 +62,38 @@ namespace BankMatilda.Services
             return account;
         }
 
-       
+        public void Transfer(int fromAccountId, int toAccountId, decimal amount)
+        {
+            var fromAccount = _context.Accounts.First(a => a.AccountId == fromAccountId);
+            var toAccount = _context.Accounts.First(a => a.AccountId == toAccountId);
+            var transaction = new Transaction
+            {
+                AccountId = fromAccountId,
+                Date = DateTime.Now,
+                Type = "Debit",
+                Operation = "Transfer to Another account",
+                Balance = fromAccount.Balance - amount,
+                Amount = -amount,
+                Account = toAccount.ToString()
+            };
+            var transactionTo = new Transaction
+            {
+                AccountId = toAccountId,
+                Date = DateTime.Now,
+                Type = "Credit",
+                Operation = "Collection from Another account",
+                Balance = toAccount.Balance + amount,
+                Amount = amount,
+                Account = fromAccountId.ToString()
+            };
+            fromAccount.Balance -= amount;
+            toAccount.Balance += amount;
+
+            fromAccount.Transactions.Add(transaction);
+            toAccount.Transactions.Add(transaction);
+            _context.SaveChanges();
+        }
+
+
     }
 }

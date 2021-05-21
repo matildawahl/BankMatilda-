@@ -1,5 +1,19 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model BankMatilda.ViewModels.TransactionTransferViewModel
+
+<form asp-controller="Transactions" asp-action="Transfer" method="post">
+    <label>Account Number:</label><br>
+    <input asp-for="AccountId"><br>
+    <span asp-validation-for="AccountId"></span><br/>
+
+    <label>Amount:</label><br>
+    <input asp-for="AmountToTransfer">
+    <span asp-validation-for="AmountToTransfer"></span><br/><br/>
+
+
+    <label>To Account Id:</label><br>
+    <input asp-for="ToAccountId">
+    <span asp-validation-for="ToAccountId"></span>
+
+    <button class="btn btn-dark" type="submit">Proceed</button>
+</form>
+

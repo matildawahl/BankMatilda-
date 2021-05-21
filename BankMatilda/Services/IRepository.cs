@@ -15,7 +15,7 @@ namespace BankMatilda.Services
         public IQueryable<Transaction> GetTransactions(int accountId);
         public IEnumerable<Account> GetAllAccounts();
         public IQueryable<Transaction> GetAllTransactions();
-       
+        public void Transfer(int fromAccountId, int toAccountId, decimal amount);
         public IEnumerable<Data.Disposition> GetAll();
         public Account UpdateAccount(Account account);
 

@@ -52,13 +52,24 @@ namespace BankMatilda.Controllers
             return (page - 1) * pageSize;
         }
 
-        public IActionResult Transfer(int accountId, decimal amount)
+        public IActionResult Transfer()
         {
             var viewModel = new TransactionTransferViewModel();
             return View(viewModel);
         }
 
-        
+        [HttpPost]
+        public IActionResult Transfer(TransactionTransferViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Transfer(viewModel.AccountId, viewModel.ToAccountId, viewModel.AmountToTransfer);
+                return RedirectToAction("Index");
+            }
+            return View(viewModel);
+        }
+
+
         public IActionResult Withdraw()
         {
             var viewModel = new TransactionWithdrawViewModel();
@@ -79,7 +90,7 @@ namespace BankMatilda.Controllers
                 trans.Operation = "Withdrawal in Cash";
                 trans.Type = "Credit";
                 trans.Symbol = "";
-                trans.Amount = viewModel.AmountToWithdraw;
+                trans.Amount = -viewModel.AmountToWithdraw;
                 trans.AccountNavigation = account;
 
                 account.Balance -= viewModel.AmountToWithdraw;
@@ -129,14 +140,24 @@ namespace BankMatilda.Controllers
 
         public JsonResult CheckAccountId(int AccountId)
         {
-                var account = _repository.GetAccountById(AccountId);
+            var account = _repository.GetAccountById(AccountId);
             if (account != null)
             {
                 return Json(true);
             }
-
             return Json("Invalid AccountId");
         }
+
+        public JsonResult CheckAccountId2(int ToAccountId)
+        {
+            var account = _repository.GetAccountById(ToAccountId);
+            if (account != null)
+            {
+                return Json(true);
+            }
+            return Json("Invalid AccountId");
+        }
+
 
     }
 

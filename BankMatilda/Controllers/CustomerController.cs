@@ -91,39 +91,40 @@ namespace BankMatilda.Controllers
     }
 }
 
-
 //[Authorize(Roles = "Admin,Cashier")]
-        //public IActionResult EditCustomer(int id)
-        //{
-        //    var viewModel = new CustomerEditViewModel();
+//public IActionResult EditCustomer(int id)
+//{
+//var viewModel = new CustomerEditViewModel();
 
-        //    //var customer = _context.Customers.First(r => r.CustomerId == id);
+//var customer = _context.Customers.First(r => r.CustomerId == id);
 
-        //    //viewModel.Emailaddress = customer.Emailaddress;
-        //    //viewModel.Givenname = customer.Givenname;
-        //    //viewModel.Streetaddress = customer.Streetaddress;
-        //    ////Fält =----> viewModel.Streetaddress = customer.Streetaddress;
-        //    return View(viewModel);
-        //}
+//viewModel.Emailaddress = customer.Emailaddress;
+//viewModel.Givenname = customer.Givenname;
+//viewModel.Streetaddress = customer.Streetaddress;
 
-        //[HttpPost]
-        //public IActionResult EditCustomer(int id, CustomerEditViewModel viewModel)
-        //{
-        //    //if (ModelState.IsValid)
-        //    //{
-        //    //    var customer = _context.Customers.First(r => r.CustomerId == id);
-        //    //    customer.Givenname = viewModel.Givenname;
-        //    //    customer.Emailaddress = viewModel.Emailaddress;
-        //    //    customer.Streetaddress = viewModel.Streetaddress;
-        //    //    _context.SaveChanges();
-        //    //    //TODO ändra redrict
-        //    //    return RedirectToAction("Index");
-        //    //}
+//return View(viewModel);
+//}
 
-        //    return View(viewModel);
-        //}
 
-        //Todo paginering = ladda in med js/ajax. Ta bort Take(100) sen
+
+//[HttpPost]
+//public IActionResult EditCustomer(int id, CustomerEditViewModel viewModel)
+//{
+//    //if (ModelState.IsValid)
+//    //{
+//    //    var customer = _context.Customers.First(r => r.CustomerId == id);
+//    //    customer.Givenname = viewModel.Givenname;
+//    //    customer.Emailaddress = viewModel.Emailaddress;
+//    //    customer.Streetaddress = viewModel.Streetaddress;
+//    //    _context.SaveChanges();
+//    //    //TODO ändra redrict
+//    //    return RedirectToAction("Index");
+//    //}
+
+//    return View(viewModel);
+//}
+
+
 
 
 

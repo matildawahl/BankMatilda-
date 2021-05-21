@@ -58,9 +58,37 @@ namespace BankMatilda.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Withdraw(int accountId, decimal amount)
+        
+        public IActionResult Withdraw()
         {
             var viewModel = new TransactionWithdrawViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Withdraw(TransactionWithdrawViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var trans = new Transaction();
+                var account = _repository.GetAccountById(viewModel.AccountId);
+
+                trans.Balance = account.Balance - viewModel.AmountToWithdraw;
+                trans.AccountId = account.AccountId;
+                trans.Date = DateTime.Now.Date;
+                trans.Operation = "Withdrawal in Cash";
+                trans.Type = "Credit";
+                trans.Symbol = "";
+                trans.Amount = viewModel.AmountToWithdraw;
+                trans.AccountNavigation = account;
+
+                account.Balance -= viewModel.AmountToWithdraw;
+                account.Transactions.Add(trans);
+
+                _repository.UpdateAccount(account);
+                return RedirectToAction("Index");
+
+            }
             return View(viewModel);
         }
 

@@ -43,7 +43,7 @@ namespace BankMatilda.Services
 
         public IQueryable<Transaction> GetAllTransactions()
         {
-            return _context.Transactions;
+            return _context.Transactions.OrderByDescending(t => t.Date);
         }
 
         public void CreateTransaction(string id, decimal amount)

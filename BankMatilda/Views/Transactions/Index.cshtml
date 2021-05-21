@@ -21,9 +21,7 @@
                         <thead>
                         <tr>
                             <th scope="col">AccountId</th>
-                            <th scope="col">Operation</th>
                             <th scope="col">Date</th>
-                            <th scope="col">TransactionId</th>
                             <th scope="col">Amount</th>
                         </tr>
                         </thead>
@@ -32,11 +30,9 @@
                         {
                             <tr>
                                 <td>@transations.AccountId</td>
-                                <td>@transations.Operation</td>
                                 <td>
-                                    @transations.Date
+                                    @transations.Date.ToShortDateString()
                                 </td>
-                                <td>@transations.TransactionId</td>
                                 <td>@transations.Amount</td>
                             </tr>}
                         </tbody>

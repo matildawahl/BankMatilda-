@@ -1,13 +1,14 @@
 ﻿@model BankMatilda.ViewModels.TransactionWithdrawViewModel
 
-<form asp-controller="Transactions" asp-action="Withdraw" method="post">
-    <label>Account Id</label><br/>
-    <input asp-for="AccountId"/><br/>
+<form asp-controller="Transactions" asp-action="Deposit" method="post">
+    <label>Account Number:</label><br>
+    <input asp-for="AccountId"><br>
     <span asp-validation-for="AccountId"></span>
-    <label>Amount</label>
-    <input asp-for="AmountToWithdraw"/> 
-    <span asp-validation-for="AmountToWithdraw"></span>
-    <button type="submit">Proceed</button>
-    
 
+    <label>Amount:</label><br>
+    <input asp-for="AmountToWithdraw">
+    <span asp-validation-for="AmountToWithdraw"></span>
+
+    <button class="btn btn-dark" type="submit">Proceed</button>
 </form>
+

@@ -9,7 +9,7 @@ namespace BankMatilda.ViewModels
 {
     public class TransactionWithdrawViewModel
     {
-        [Remote("CheckAccountId", "Transaction")]
+        [Remote("CheckAccountId", "Transactions")]
         public int AccountId { get; set; }
 
         [Range(1, 100000)]

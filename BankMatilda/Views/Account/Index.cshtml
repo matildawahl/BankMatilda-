@@ -19,7 +19,7 @@
                             <th scope="col">Account ID</th>
                             <th scope="col">Balance</th>
                             <th scope="col">Created</th>
-                            <th scope="col">Loans</th>
+                            <th scope="col">Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,8 @@
                                 <td>@account.AccountId</td>
                                 <td>@account.Balance</td>
                                 <td>@account.Created</td>
-                                <td>@account.Loans</td>
+                                <td><a asp-controller="Account" asp-action="Details" asp-route-Id="@account.AccountId" class="btn btn-secondary active" role="button" aria-pressed="true">Details</a></td>
+                                
 
 
                             </tr>

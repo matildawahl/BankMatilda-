@@ -31,9 +31,9 @@ namespace BankMatilda.Services
             return _context.Customers.FirstOrDefault(c => c.CustomerId == id);
         }
 
-        public IQueryable<Transaction> GetTransactions(int customerId, int accountId)
+        public IQueryable<Transaction> GetTransactions(int accountId)
         {
-            return _context.Transactions;
+            return _context.Transactions.Where(t=> t.AccountId == accountId).OrderByDescending(d => d.Date).ThenByDescending(d => d.TransactionId);
         }
 
         public IEnumerable<Account> GetAllAccounts()
@@ -43,17 +43,11 @@ namespace BankMatilda.Services
 
         public IQueryable<Transaction> GetAllTransactions()
         {
-            return _context.Transactions.OrderByDescending(t => t.Date);
+            return _context.Transactions.OrderByDescending(d => d.Date).ThenByDescending(d => d.TransactionId);
+
         }
 
-        public void CreateTransaction(string id, decimal amount)
-        {
-            var trans = new Transaction();
-            _context.Transactions.Add(trans);
-            trans.Amount = amount;
-            trans.TransactionId = Int32.Parse(id);
-            _context.SaveChanges();
-        }
+       
 
         public IEnumerable<Disposition> GetAll()
         {

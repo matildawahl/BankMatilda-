@@ -1,0 +1,53 @@
+﻿@model BankMatilda.ViewModels.AccountDetailsViewModel
+@{ 
+    ViewData["Title"] = "Admin Page";
+}
+
+<div class="card-header">
+    <h3 class="h6 text-uppercase mb-0">Account Information</h3>
+</div>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Balance</th>
+        <th>Frequency</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>@Model.AccountId</td>
+        <td>@Model.Balance</td>
+        <td>@Model.Frequency</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="card-header">
+    <h3 class="h6 text-uppercase mb-0">Transactions</h3>
+</div>
+
+<table class="table table-hover">
+    
+    <thead>
+        <tr>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Saldo left</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var detail in @Model.Transactions)
+        {
+            <tr>
+                <td>@detail.Transaction</td>
+                <td>@detail.Date</td>
+                <td>@detail.Amount</td>
+                <td>@detail.SaldoLeft</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

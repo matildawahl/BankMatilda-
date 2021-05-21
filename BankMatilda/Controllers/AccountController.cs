@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using BankMatilda.Data;
 using BankMatilda.Models;
 using BankMatilda.Services;
+using BankMatilda.ViewModels;
 using JW;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
 
 namespace BankMatilda.Controllers
@@ -43,6 +45,31 @@ namespace BankMatilda.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Details(int id){
+
+            var account = _repository.GetAccountById(id);
+            var viewModel = new AccountDetailsViewModel
+            {
+                AccountId = account.AccountId,
+                Balance = account.Balance,
+                Frequency = account.Frequency
+            };
+
+
+            viewModel.Transactions = _repository.GetTransactions(id).Select(t =>
+                new AccountDetailsViewModel.TransactionItem
+                {
+                    Transaction = t.Operation,
+                    Date = t.Date,
+                    Amount = t.Amount,
+                    SaldoLeft = t.Balance,
+                }).ToList();
+
+            return View(viewModel);
+        }
+
+
+        
         private int CalculateHowManyAccountsToSkip(int page, int pageSize)
         {
             return (page - 1) * pageSize;

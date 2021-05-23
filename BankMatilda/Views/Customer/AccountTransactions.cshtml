@@ -10,28 +10,50 @@
             <div class="card-body">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
-                            <th scope="col">Account Id</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Balance</th>
-                            <th scope="col">Bank</th>
-                            <th scope="col">Symbol</th>
-                            <th scope="col">Operation</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">Account Id</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Balance</th>
+                        <th scope="col">Bank</th>
+                        <th scope="col">Symbol</th>
+                        <th scope="col">Operation</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var ddd in Model.Transactions)
-                        {
-            <tr>
-                <td>@ddd.AccountId</td>
-                <td>@ddd.Amount</td>
-                <td>@ddd.Balance</td>
-                <td>@ddd.Bank</td>
-                <td>@ddd.Symbol</td>
-                <td>@ddd.Operation</td>
-            </tr>}
+                    @foreach (var ddd in Model.Transactions)
+                    {
+                        <tr>
+                            <td>@ddd.AccountId</td>
+                            <td>@ddd.Amount</td>
+                            <td>@ddd.Balance</td>
+                            <td>@ddd.Bank</td>
+                            <td>@ddd.Symbol</td>
+                            <td>@ddd.Operation</td>
+                        </tr>}
                     </tbody>
                 </table>
+                
+                <a class="btn btn-primary" href="#" onclick="fetch20more(); return false;">Hämta 20 nästa</a>
+
+                @section Scripts
+                {
+                    <script>
+                        var skip = 0;
+
+                        function fetch20more() {
+                       
+                            skip = skip + 20;
+                           
+                            $.ajax({
+                                url: "/transaction/GetTransactions?skip=" + skip,
+                                success: function(result) {
+                                    $("#transactions").append(result);
+                                }
+                            });
+                        }
+                    </script>
+                }
+
             </div>
         </div>
     </div>

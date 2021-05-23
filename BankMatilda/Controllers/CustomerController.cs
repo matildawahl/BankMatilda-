@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using BankMatilda.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using BankMatilda.Data;
 using BankMatilda.Services;
+using BankMatilda.ViewModels;
 using JW;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankMatilda.Controllers
 {
@@ -60,10 +63,10 @@ namespace BankMatilda.Controllers
             var account = _repository.GetAccountById(id);
             viewModel.Account = new CustomerDetailsViewModel.AccountViewModel
             {
-                    AccountId = account.AccountId,
-                    Balance = account.Balance,
-                    Created = account.Created,
-                    Frequency = account.Frequency
+                AccountId = account.AccountId,
+                Balance = account.Balance,
+                Created = account.Created,
+                Frequency = account.Frequency
             };
 
             var customer = _repository.GetCustomer(id);
@@ -88,41 +91,111 @@ namespace BankMatilda.Controllers
 
             return View(viewModel);
         }
+
+
+        [Authorize(Roles = "Cashier")]
+        public IActionResult EditCustomer(int id)
+        {
+            var viewModel = new CustomerEditViewModel();
+            viewModel.Genders = GetGenderListItems();
+
+            var customer = _repository.GetCustomer(id);
+
+            viewModel.Givenname = customer.Givenname;
+            viewModel.Surname = customer.Surname;
+            viewModel.SelectedGender = customer.Gender;
+            viewModel.Birthday = customer.Birthday;
+            viewModel.Telephonecountrycode = customer.Telephonecountrycode;
+            viewModel.Telephonenumber = customer.Telephonenumber;
+            viewModel.Emailaddress = customer.Emailaddress;
+            viewModel.Streetaddress = customer.Streetaddress;
+            viewModel.Zipcode = customer.Zipcode;
+            viewModel.City = customer.City;
+            viewModel.CountryCode = customer.CountryCode;
+            viewModel.Country = customer.Country;
+           
+       
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult EditCustomer(int id, CustomerEditViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = _repository.GetCustomer(id);
+                customer.Givenname = viewModel.Givenname;
+                customer.Surname = viewModel.Surname;
+                customer.Gender = viewModel.SelectedGender;
+                customer.Telephonecountrycode = viewModel.Telephonecountrycode;
+                customer.Telephonenumber = viewModel.Telephonenumber;
+                customer.Emailaddress = viewModel.Emailaddress;
+                customer.Streetaddress = viewModel.Streetaddress;
+                customer.Zipcode = viewModel.Zipcode;
+                customer.City = viewModel.City;
+                customer.CountryCode = viewModel.CountryCode;
+                customer.Country = viewModel.Country;
+
+                _repository.UpdateCustomer(customer);
+                return RedirectToAction("Index");
+            }
+            viewModel.Genders = GetGenderListItems();
+            return View(viewModel);
+        }
+
+        public IActionResult NewCustomer()
+        {
+            var viewModel = new CustomerNewViewModel();
+            viewModel.Genders = GetGenderListItems();
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult NewCustomer(CustomerNewViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = new Customer();
+                customer.Givenname = viewModel.Givenname;
+                customer.Surname = viewModel.Surname;
+                customer.Gender = viewModel.SelectedGender;
+                customer.Telephonecountrycode = viewModel.Telephonecountrycode;
+                customer.Telephonenumber = viewModel.Telephonenumber;
+                customer.Emailaddress = viewModel.Emailaddress;
+                customer.Streetaddress = viewModel.Streetaddress;
+                customer.Zipcode = viewModel.Zipcode;
+                customer.City = viewModel.City;
+                customer.CountryCode = viewModel.CountryCode;
+                customer.Country = viewModel.Country;
+
+               
+                _repository.SaveCustomer(customer);
+                return RedirectToAction("Index");
+            }
+
+            viewModel.Genders = GetGenderListItems();
+            return View(viewModel);
+
+        }
+
+        private List<SelectListItem> GetGenderListItems()
+        {
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "0", Text = "Select Gender" });
+
+            list.Add(new SelectListItem { Value = "Female", Text = "Female" });
+            list.Add(new SelectListItem { Value = "Male", Text = "Male" });
+            return list;
+        }
+
     }
+
+
+
 }
-
-//[Authorize(Roles = "Admin,Cashier")]
-//public IActionResult EditCustomer(int id)
-//{
-//var viewModel = new CustomerEditViewModel();
-
-//var customer = _context.Customers.First(r => r.CustomerId == id);
-
-//viewModel.Emailaddress = customer.Emailaddress;
-//viewModel.Givenname = customer.Givenname;
-//viewModel.Streetaddress = customer.Streetaddress;
-
-//return View(viewModel);
-//}
-
-
-
-//[HttpPost]
-//public IActionResult EditCustomer(int id, CustomerEditViewModel viewModel)
-//{
-//    //if (ModelState.IsValid)
-//    //{
-//    //    var customer = _context.Customers.First(r => r.CustomerId == id);
-//    //    customer.Givenname = viewModel.Givenname;
-//    //    customer.Emailaddress = viewModel.Emailaddress;
-//    //    customer.Streetaddress = viewModel.Streetaddress;
-//    //    _context.SaveChanges();
-//    //    //TODO ändra redrict
-//    //    return RedirectToAction("Index");
-//    //}
-
-//    return View(viewModel);
-//}
 
 
 

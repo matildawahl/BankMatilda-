@@ -1,25 +1,27 @@
-﻿@model BankMatilda.Models.CustomerEditViewModel
+﻿@model BankMatilda.ViewModels.CustomerNewViewModel
 @{ ViewData["Title"] = "Admin Page edit"; }
+
+
 <section class="py-5">
     <div class="row">
         <div class="col-lg-12 mb-5">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="h6 text-uppercase mb-0">Edit Person</h3>
+                    <h3 class="h6 text-uppercase mb-0">New Customer</h3>
                 </div>
 
                 <div class="card-body">
-                    <form method="post" asp-controller="Customer" asp-action="EditCustomer">
+                    <form asp-controller="Customer" asp-action="NewCustomer" method="post">
                         <div class="form-group">
-                            <label asp-for="Givenname">Givenname</label>
+                            <label asp-for="Givenname">Given Name</label>
                             <input class="form-control" asp-for="Givenname">
-                            <span asp-validation-for="Givenname" class="field-validation-error"></span>
+                            <span asp-validation-for="Givenname"></span>
                         </div>
                         
                         <div class="form-group">
                             <label asp-for="Surname">Surname</label>
                             <input class="form-control" asp-for="Surname">
-                            <span asp-validation-for="Surname" class="field-validation-error"></span>
+                            <span asp-validation-for="Surname"></span>
                         </div>
                         
                         <div class="form-group">
@@ -32,49 +34,49 @@
                         <div class="form-group">
                             <label asp-for="Telephonecountrycode">Telephonecountrycode</label>
                             <input class="form-control" asp-for="Telephonecountrycode">
-                            <span asp-validation-for="Telephonecountrycode" class="field-validation-error"></span>
+                            <span asp-validation-for="Telephonecountrycode"></span>
                         </div>
-
+                        
                         <div class="form-group">
-                            <label asp-for="Telephonenumber">Telephone Number</label>
+                            <label asp-for="Telephonenumber">Telephonenumber</label>
                             <input class="form-control" asp-for="Telephonenumber">
-                            <span asp-validation-for="Telephonenumber" class="field-validation-error"></span>
+                            <span asp-validation-for="Telephonenumber"></span>
                         </div>
                         
                         <div class="form-group">
-                            <label asp-for="Emailaddress">Email Address</label>
+                            <label asp-for="Emailaddress">Emailaddress</label>
                             <input class="form-control" asp-for="Emailaddress">
-                            <span asp-validation-for="Emailaddress" class="field-validation-error"></span>
+                            <span asp-validation-for="Emailaddress"></span>
                         </div>
                         
                         <div class="form-group">
-                            <label asp-for="Streetaddress">Street Address</label>
+                            <label asp-for="Streetaddress">Streetaddress</label>
                             <input class="form-control" asp-for="Streetaddress">
-                            <span asp-validation-for="Streetaddress" class="field-validation-error"></span>
+                            <span asp-validation-for="Streetaddress" ></span>
                         </div>
                         
                         <div class="form-group">
                             <label asp-for="Zipcode">Zipcode</label>
                             <input class="form-control" asp-for="Zipcode">
-                            <span asp-validation-for="Zipcode" class="field-validation-error"></span>
+                            <span asp-validation-for="Zipcode" ></span>
                         </div>
                         
                         <div class="form-group">
                             <label asp-for="City">City</label>
                             <input class="form-control" asp-for="City">
-                            <span asp-validation-for="City" class="field-validation-error"></span>
+                            <span asp-validation-for="City" ></span>
                         </div>
                         
                         <div class="form-group">
                             <label asp-for="CountryCode">Country code</label>
                             <input class="form-control" asp-for="CountryCode">
-                            <span asp-validation-for="CountryCode" class="field-validation-error"></span>
+                            <span asp-validation-for="CountryCode" ></span>
                         </div>
                         
                         <div class="form-group">
                             <label asp-for="Country">Country</label>
                             <input class="form-control" asp-for="Country">
-                            <span asp-validation-for="Country" class="field-validation-error"></span>
+                            <span asp-validation-for="Country" ></span>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -86,4 +88,3 @@
         </div>
     </div>
 </section>
-

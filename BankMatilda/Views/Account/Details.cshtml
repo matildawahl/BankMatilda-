@@ -1,5 +1,5 @@
 ﻿@model BankMatilda.ViewModels.AccountDetailsViewModel
-@{ 
+@{
     ViewData["Title"] = "Admin Page";
 }
 
@@ -8,18 +8,18 @@
 </div>
 <table class="table table-hover">
     <thead>
-    <tr>
-        <th>Id</th>
-        <th>Balance</th>
-        <th>Frequency</th>
-    </tr>
+        <tr>
+            <th>Id</th>
+            <th>Balance</th>
+            <th>Frequency</th>
+        </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>@Model.AccountId</td>
-        <td>@Model.Balance</td>
-        <td>@Model.Frequency</td>
-    </tr>
+        <tr>
+            <td>@Model.AccountId</td>
+            <td>@Model.Balance</td>
+            <td>@Model.Frequency</td>
+        </tr>
     </tbody>
 </table>
 
@@ -27,8 +27,8 @@
     <h3 class="h6 text-uppercase mb-0">Transactions</h3>
 </div>
 
-<table class="table table-hover">
-    
+<table class="table table-hover" id="transactions">
+
     <thead>
         <tr>
             <th>Transaction</th>
@@ -39,15 +39,31 @@
     </thead>
     <tbody>
 
-    @foreach (var detail in @Model.Transactions)
+        @foreach (var detail in @Model.Transactions)
         {
-            <tr>
-                <td>@detail.Transaction</td>
-                <td>@detail.Date</td>
-                <td>@detail.Amount</td>
-                <td>@detail.SaldoLeft</td>
-            </tr>
+
+            <partial name="_TransactionsRow" model="@detail" />
+
         }
 
     </tbody>
 </table>
+<a class="btn btn-primary" href="#" onclick="fetch20more(); return false;">Hämta 20 nästa</a>
+
+@section Scripts
+{
+    <script>
+    var skip = 0;
+    function fetch20more() {
+
+
+        skip = skip + 20;
+
+        $.ajax({
+            url: "/account/GetTransactions/@Model.AccountId?skip=" + skip, success: function (result) {
+                $("#transactions").append(result);
+            }
+        });
+
+    }</script>
+}

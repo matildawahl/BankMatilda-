@@ -55,8 +55,9 @@ namespace BankMatilda.Controllers
                 Frequency = account.Frequency
             };
 
+            var query = _repository.GetTransactions(id);
 
-            viewModel.Transactions = _repository.GetTransactions(id).Select(t =>
+            viewModel.Transactions =query.Skip(0).Take(20).Select(t =>
                 new AccountDetailsViewModel.TransactionItem
                 {
                     Transaction = t.Operation,
@@ -68,8 +69,43 @@ namespace BankMatilda.Controllers
             return View(viewModel);
         }
 
+        public IActionResult GetTransactions(int id, int skip)
+        {
+            var viewModel = new AccountDetailsViewModel.GetTransactions();
+            var query = _repository.GetTransactions(id);
 
-        
+            viewModel.Transactions = query.Skip(skip).Take(20).Select(t =>
+                new AccountDetailsViewModel.TransactionItem()
+                {
+                    Transaction = t.Operation,
+                    Date = t.Date,
+                    Amount = t.Amount,
+                    SaldoLeft = t.Balance,
+                }).ToList();
+
+
+
+            //viewModel.Transactions = query.Skip(skip).Take(20).Select(dbTransact => new CustomerTransactionsViewModel.TransactionsViewModel
+            //{
+            //    AccountId = dbTransact.AccountId,
+            //    TransactionId = dbTransact.TransactionId,
+            //    Account = dbTransact.Account,
+            //    Amount = dbTransact.Amount,
+            //    Balance = dbTransact.Balance,
+            //    Date = dbTransact.Date,
+            //    Bank = dbTransact.Bank,
+            //    Operation = dbTransact.Operation,
+            //    Symbol = dbTransact.Symbol,
+            //    Type = dbTransact.Type
+            //}).ToList();
+
+          
+
+            return View(viewModel);
+        }
+
+
+
         private int CalculateHowManyAccountsToSkip(int page, int pageSize)
         {
             return (page - 1) * pageSize;

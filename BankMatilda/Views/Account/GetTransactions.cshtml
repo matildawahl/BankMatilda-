@@ -1,0 +1,9 @@
+﻿@model BankMatilda.ViewModels.AccountDetailsViewModel.GetTransactions
+
+@{ Layout = null; }
+
+
+@foreach (var t in Model.Transactions)
+{
+    <partial name="_TransactionsRow" model="@t" />
+}

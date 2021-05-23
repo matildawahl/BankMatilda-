@@ -1,0 +1,10 @@
+﻿@model BankMatilda.ViewModels.AccountDetailsViewModel.TransactionItem
+
+@{ Layout = null;}
+
+<tr>
+    <td>@Model.Transaction</td>
+    <td>@Model.Date.ToString("yyyy-MM-dd")</td>
+    <td>@Model.Amount</td>
+    <td>@Model.SaldoLeft</td>
+</tr>

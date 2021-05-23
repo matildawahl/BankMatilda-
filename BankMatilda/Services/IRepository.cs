@@ -18,6 +18,8 @@ namespace BankMatilda.Services
         public void Transfer(int fromAccountId, int toAccountId, decimal amount);
         public IEnumerable<Data.Disposition> GetAll();
         public Account UpdateAccount(Account account);
+        public Customer UpdateCustomer(Customer customer);
+        public Customer SaveCustomer(Customer customer);
 
 
 

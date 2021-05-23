@@ -28,5 +28,11 @@ namespace BankMatilda.ViewModels
         public decimal Balance { get; set; }
 
         public List<TransactionItem> Transactions { get; set; } = new List<TransactionItem>();
+    public class GetTransactions
+    {
+        public int AccountId { get; set; }
+        public List<TransactionItem> Transactions { get; set; } = new List<TransactionItem>();
     }
+    }
+
 }

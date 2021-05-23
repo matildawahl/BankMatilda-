@@ -94,6 +94,22 @@ namespace BankMatilda.Services
             _context.SaveChanges();
         }
 
+        public Customer UpdateCustomer(Customer customer)
+        {
+            _context.Update(customer);
+            _context.SaveChanges();
+            return customer;
+        }
+
+        public Customer SaveCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+            return customer;
+        }
+        
+
+
 
     }
 }

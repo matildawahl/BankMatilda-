@@ -11,6 +11,15 @@
                 <h3 class="h6 text-uppercase mb-0">Customers</h3>
             </div>
             
+            <br/>
+            <div>
+                <a asp-controller="Customer" asp-action="NewCustomer" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 btn btn-secondary active" role="button" aria-pressed="true">New Customer</a>
+            </div>
+            <br/>
+            
+           
+           
+
             <form asp-controller="Customer" asp-action="Details" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group">
                     <input type="text" name="id" class="form-control bg-light border-0 small" placeholder="Id.."
@@ -35,63 +44,61 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach (var customer in Model.Customers)
-                    {
-                        <tr>
-                            <td>@customer.CustomerId</td>
-                            <td>@customer.NationalId</td>
-                            <td>@customer.Givenname @customer.Surname</td>
-                            <td>@customer.Streetaddress @customer.Zipcode</td>
-                            <td>@customer.City</td>
-                            <td><a asp-controller="Customer" asp-action="Details" asp-route-Id="@customer.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">View customer</a></td>
-                            <td><a asp-controller="Customer" asp-action="EditCustomer" asp-route-Id="@customer.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Edit</a></td>
-                        </tr>
-                    }
+                        @foreach (var customer in Model.Customers)
+                        {
+            <tr>
+                <td>@customer.CustomerId</td>
+                <td>@customer.NationalId</td>
+                <td>@customer.Givenname @customer.Surname</td>
+                <td>@customer.Streetaddress @customer.Zipcode</td>
+                <td>@customer.City</td>
+                <td><a asp-controller="Customer" asp-action="Details" asp-route-Id="@customer.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">View customer</a></td>
+                <td><a asp-controller="Customer" asp-action="EditCustomer" asp-route-Id="@customer.CustomerId" class="btn btn-secondary active" role="button" aria-pressed="true">Edit</a></td>
+            </tr>}
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <td colspan="5">
-                            <nav aria-label="...">
-                                <ul class="pagination justify-content-center flex-wrap">
-                                    <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-                                        <a class="page-link text-primary"
-                                           asp-controller="Customer"
-                                           asp-action="Index"
-                                           asp-route-page="1">First</a>
-                                    </li>
-                                    <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-                                        <a class="page-link text-primary"
-                                           asp-controller="Customer"
-                                           asp-action="Index"
-                                           asp-route-page="@(Model.CurrentPage - 1)">Prev</a>
-                                    </li>
-                        
-                                    @foreach (var pa in Model.DisplayPages)
-                                    {
-                                        <li class="page-item @(Model.CurrentPage == pa ? "disabled" : "")">
+                        <tr>
+                            <td colspan="5">
+                                <nav aria-label="...">
+                                    <ul class="pagination justify-content-center flex-wrap">
+                                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
                                             <a class="page-link text-primary"
                                                asp-controller="Customer"
                                                asp-action="Index"
-                                               asp-route-page="@pa">@pa</a>
+                                               asp-route-page="1">First</a>
                                         </li>
-                                    }
-                    
-                                    <li class="page-item @(Model.CurrentPage == Model.TotalPageCount ? "disabled" : "")">
-                                        <a class="page-link text-primary"
-                                           asp-controller="Customer"
-                                           asp-action="Index"
-                                           asp-route-page="@(Model.CurrentPage + 1)">Next</a>
-                                    </li>
-                                    <li class="page-item @(Model.CurrentPage == Model.TotalPageCount ? "disabled" : "")">
-                                        <a class="page-link text-primary"
-                                           asp-controller="Customer"
-                                           asp-action="Index"
-                                           asp-route-page="@(Model.TotalPageCount)">Last</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </td>
-                    </tr>
+                                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                                            <a class="page-link text-primary"
+                                               asp-controller="Customer"
+                                               asp-action="Index"
+                                               asp-route-page="@(Model.CurrentPage - 1)">Prev</a>
+                                        </li>
+
+                                        @foreach (var pa in Model.DisplayPages)
+                                        {
+                            <li class="page-item @(Model.CurrentPage == pa ? "disabled" : "")">
+                                <a class="page-link text-primary"
+                                   asp-controller="Customer"
+                                   asp-action="Index"
+                                   asp-route-page="@pa">@pa</a>
+                            </li>}
+
+                                        <li class="page-item @(Model.CurrentPage == Model.TotalPageCount ? "disabled" : "")">
+                                            <a class="page-link text-primary"
+                                               asp-controller="Customer"
+                                               asp-action="Index"
+                                               asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+                                        </li>
+                                        <li class="page-item @(Model.CurrentPage == Model.TotalPageCount ? "disabled" : "")">
+                                            <a class="page-link text-primary"
+                                               asp-controller="Customer"
+                                               asp-action="Index"
+                                               asp-route-page="@(Model.TotalPageCount)">Last</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </td>
+                        </tr>
                     </tfoot>
 
                 </table>

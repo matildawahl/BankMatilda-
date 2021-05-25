@@ -201,7 +201,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button type="submit" class="btn btn-dark">Logout</button>
+                            <div type="submit" class="btn btn-dark">Logout</div>
                         </form>
                     </a>
                 </div>
@@ -284,6 +284,7 @@
     <script src="~/js/demo/chart-pie-demo.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/DecimalValidation.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 

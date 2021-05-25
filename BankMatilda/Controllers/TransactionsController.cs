@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace BankMatilda.Controllers
 {
+    [Authorize(Roles = "Admin,Cashier")]
     public class TransactionsController : Controller
     {
         private readonly IRepository _repository;
@@ -22,7 +23,6 @@ namespace BankMatilda.Controllers
             _repository = repository;
         }
 
-        [Authorize(Roles = "Admin,Cashier")]
         public IActionResult Index(int page = 1)
         {
             var viewModel = new TransactionsViewModel();

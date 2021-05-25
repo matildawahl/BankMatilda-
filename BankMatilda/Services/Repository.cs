@@ -18,7 +18,12 @@ namespace BankMatilda.Services
 
         public Account GetAccountById(int id)
         {
-            return _context.Accounts.FirstOrDefault(a => a.AccountId == id);
+            return _context.Dispositions.Include(a => a.Account).First(a => a.CustomerId == id).Account;
+        }
+
+        public List<Account> GetCustomerAccounts(int customerId)
+        {
+            return _context.Dispositions.Where(y => y.CustomerId == customerId).Select(xx => xx.Account).ToList();
         }
 
         public IEnumerable<Customer> GetCustomers()
@@ -39,6 +44,12 @@ namespace BankMatilda.Services
         public IEnumerable<Account> GetAllAccounts()
         {
             return _context.Accounts;
+        }
+
+        public Customer GetAllAccountFromCustomer(int id)
+        {
+            return _context.Customers.Include(c => c.Dispositions).ThenInclude(d => d.Account)
+                .FirstOrDefault(c => c.CustomerId == id);
         }
 
         public IQueryable<Transaction> GetAllTransactions()
@@ -66,7 +77,8 @@ namespace BankMatilda.Services
         {
             var fromAccount = _context.Accounts.First(a => a.AccountId == fromAccountId);
             var toAccount = _context.Accounts.First(a => a.AccountId == toAccountId);
-            var transaction = new Transaction
+            
+            var transactionFrom = new Transaction
             {
                 AccountId = fromAccountId,
                 Date = DateTime.Now,
@@ -76,6 +88,7 @@ namespace BankMatilda.Services
                 Amount = -amount,
                 Account = toAccount.ToString()
             };
+
             var transactionTo = new Transaction
             {
                 AccountId = toAccountId,
@@ -89,8 +102,8 @@ namespace BankMatilda.Services
             fromAccount.Balance -= amount;
             toAccount.Balance += amount;
 
-            fromAccount.Transactions.Add(transaction);
-            toAccount.Transactions.Add(transaction);
+            fromAccount.Transactions.Add(transactionFrom);
+            toAccount.Transactions.Add(transactionTo);
             _context.SaveChanges();
         }
 

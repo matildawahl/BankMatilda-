@@ -8,7 +8,8 @@ namespace BankMatilda.Models
     public class CustomerDetailsViewModel
     {
         public CustomerViewModel Customer { get; set; }
-        public AccountViewModel Account { get; set; }
+        public List<AccountViewModel> Account { get; set; }
+        public decimal TotalCustAccount { get; set; }
 
         public class CustomerViewModel
         {
@@ -27,7 +28,8 @@ namespace BankMatilda.Models
             public string Telephonenumber { get; set; }
             public string Emailaddress { get; set; }
 
-      
+
+
         }
 
         public class AccountViewModel

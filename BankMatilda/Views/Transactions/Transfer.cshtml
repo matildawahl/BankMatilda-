@@ -1,7 +1,10 @@
 ﻿@model BankMatilda.ViewModels.TransactionTransferViewModel
 
+
+<h3>Transfer</h3>
+
 <form asp-controller="Transactions" asp-action="Transfer" method="post">
-    <label>Account Number:</label><br>
+    <label>From Account Id:</label><br>
     <input asp-for="AccountId"><br>
     <span asp-validation-for="AccountId"></span><br/>
 

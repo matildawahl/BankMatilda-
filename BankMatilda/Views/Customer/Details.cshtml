@@ -1,4 +1,5 @@
-﻿@model BankMatilda.Models.CustomerDetailsViewModel
+﻿@using BankMatilda.Data
+@model BankMatilda.Models.CustomerDetailsViewModel
 <div class="row">
     <div class="col-md-3">
         <h2 class="display-4">Customer Details</h2>
@@ -46,29 +47,38 @@
             <h3 class="h6 text-uppercase mb-0">Accounts</h3>
         </div>
     </div>
+
     <div class="card-body">
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Balance</th>
-                    <th>Created</th>
-                    <th>Frequency</th>
-                    <th>Transactions</th>
-                </tr>
+            <tr>
+                <th>Id</th>
+                <th>Balance</th>
+                <th>Created</th>
+                <th>Frequency</th>
+                <th>Total amount</th>
+                <th>Transactions</th>
+            </tr>
             </thead>
             <tbody>
-            
+            @foreach (var account in Model.Account)
+            {
                 <tr>
-                    <td>@Model.Account.AccountId</td>
-                    <td>@Model.Account.Balance</td>
-                    <td>@Model.Account.Created.ToString("yyyy-MM-dd")</td>
-                    <td>@Model.Account.Frequency</td>
-                    <td><a asp-controller="Account" asp-action="Details" asp-route-Id="@Model.Account.AccountId" class="btn btn-dark active" role="button" aria-pressed="true">Transactions</a></td>
+                    <td>@account.AccountId</td>
+                    <td>@account.Balance</td>
+                    <td>@account.Created</td>
+                    <td>@account.Frequency</td>
+                    <td><a asp-controller="Account" asp-action="Details" asp-route-Id="@account.AccountId" class="btn btn-dark active" role="button" aria-pressed="true">View transactions</a></td>
                     <td></td>
                 </tr>
+            }
+            
+            
+            
             </tbody>
         </table>
+        
+        <h3>Total summa på alla konton: @Model.TotalCustAccount</h3>
     </div>
 </div>
 </div>

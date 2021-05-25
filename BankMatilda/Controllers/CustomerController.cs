@@ -61,15 +61,9 @@ namespace BankMatilda.Controllers
         {
             var viewModel = new CustomerDetailsViewModel();
             var account = _repository.GetAccountById(id);
-            viewModel.Account = new CustomerDetailsViewModel.AccountViewModel
-            {
-                AccountId = account.AccountId,
-                Balance = account.Balance,
-                Created = account.Created,
-                Frequency = account.Frequency
-            };
 
-            var customer = _repository.GetCustomer(id);
+            var customer = _repository.GetAllAccountFromCustomer(id);
+
             viewModel.Customer = new CustomerDetailsViewModel.CustomerViewModel()
             {
                 CustomerId = customer.CustomerId,
@@ -88,10 +82,22 @@ namespace BankMatilda.Controllers
                 Telephonenumber = customer.Telephonenumber
             };
 
+            viewModel.Account = customer.Dispositions.Select(d => new CustomerDetailsViewModel.AccountViewModel
+            {
+                AccountId = account.AccountId,
+                Balance = account.Balance,
+                Created = account.Created,
+                Frequency = account.Frequency
+                
+            }).ToList();
+
+            viewModel.TotalCustAccount = viewModel.Account.Sum(a => a.Balance);
 
             return View(viewModel);
         }
 
+
+       
 
         [Authorize(Roles = "Cashier")]
         public IActionResult EditCustomer(int id)

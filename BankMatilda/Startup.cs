@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using BankMatilda.Data;
 using BankMatilda.Services;
@@ -23,6 +24,15 @@ namespace BankMatilda
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+
             services.AddTransient<IRepository, Repository>();
 
             services.AddDbContext<BankAppDataContext>(options =>

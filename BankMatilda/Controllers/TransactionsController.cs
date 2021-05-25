@@ -26,22 +26,21 @@ namespace BankMatilda.Controllers
         public IActionResult Index(int page = 1)
         {
             var viewModel = new TransactionsViewModel();
-            var totalTransactions = _repository.GetAllTransactions().Count();
-            var paging = new Pager(totalTransactions, page, 50, 10);
+            var totalTransactions = _repository.GetAllTransactions();
+            var paging = new Pager(totalTransactions.Count(), page, 50, 10);
             var skip = CalculateHowManyAccountsToSkip(page, 50);
 
-            var asd = _repository.GetAllTransactions();
-
-            viewModel.Transactions = _repository.GetAllTransactions().Skip(skip).Take(50).Select(transaction =>
+            var transactions = totalTransactions.Skip(skip).Take(50).Select(transaction =>
                 new TransactionViewModel()
                 {
+                    AccountId = transaction.AccountId,
                     Balance = transaction.Balance,
                     Amount = transaction.Amount,
                     Date = transaction.Date
-                }).ToList();
+                });
 
-
-            viewModel.TotalPageCount = paging.TotalPages;
+            viewModel.Transactions = transactions.ToList();
+            viewModel.TotalPageCount = paging.TotalPages; 
             viewModel.DisplayPages = paging.Pages;
             viewModel.CurrentPage = paging.CurrentPage;
 

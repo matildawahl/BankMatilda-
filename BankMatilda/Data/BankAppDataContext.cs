@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 #nullable disable
@@ -10,6 +11,8 @@ namespace BankMatilda.Data
         public BankAppDataContext(DbContextOptions<BankAppDataContext> options)
             : base(options)
         {
+            Database.SetCommandTimeout((int)TimeSpan.FromMinutes(5).TotalSeconds);
+
         }
 
         public virtual DbSet<Account> Accounts { get; set; }

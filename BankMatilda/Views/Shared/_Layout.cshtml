@@ -31,7 +31,7 @@
             <!-- Sidebar - Brand -->
             <li>
                 <a class="sidebar-brand d-flex align-items-center justify-content-center">
-                    <div class="sidebar-brand-text mx-3 text-dark">F*ttans bank<sup></sup></div>
+                    <div class="sidebar-brand-text mx-3 text-dark">Matildas bank<sup></sup></div>
                 </a>
             </li>
 
@@ -186,33 +186,38 @@
                             </div>
                         </li>
                         <!-- Nav Item - User Information -->
+                        <!-- Nav Item - User Information -->
                         @if (SignInManager.IsSignedIn(User))
                         {
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity.Name</span>
-                </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Profile
-                    </a>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity.Name</span>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Profile
+                                    </a>
 
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <div type="submit" class="btn btn-dark">Logout</div>
-                        </form>
-                    </a>
-                </div>
-            </li> }
+                                    <div class="dropdown-divider"></div>
+                                    @*<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">*@
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logga ut</button>
+                                </form>
+                            </li>
+                        }
                         else
                         {
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Login">
-                    <div type="button" class="btn btn-dark">Logga in</div>
-                </a>
-            </li>}
+                            <li>
+                                <a asp-area="Identity" asp-page="/Account/Login">
+                                    <div type="button" class="btn btn-dark">Logga in</div>
+                                </a>
+                            </li>
+                        }
+
 
                     </ul>
                 </nav>

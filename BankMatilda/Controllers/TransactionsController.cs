@@ -30,10 +30,11 @@ namespace BankMatilda.Controllers
             var paging = new Pager(totalTransactions, page, 50, 10);
             var skip = CalculateHowManyAccountsToSkip(page, 50);
 
+            var asd = _repository.GetAllTransactions();
+
             viewModel.Transactions = _repository.GetAllTransactions().Skip(skip).Take(50).Select(transaction =>
                 new TransactionViewModel()
                 {
-                    AccountId = transaction.AccountId,
                     Balance = transaction.Balance,
                     Amount = transaction.Amount,
                     Date = transaction.Date

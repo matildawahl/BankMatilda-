@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace BankMatilda.Models
+namespace BankMatilda.ViewModels
 {
     public class TransactionViewModel
     {

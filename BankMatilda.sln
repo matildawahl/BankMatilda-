@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30709.132
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankMatilda", "BankMatilda\BankMatilda.csproj", "{677EDC96-D79A-473B-97D3-90AA5C1E123E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankMatilda", "BankMatilda\BankMatilda.csproj", "{677EDC96-D79A-473B-97D3-90AA5C1E123E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{E98A9F13-CD8C-4D65-B65E-91812EF73119}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{677EDC96-D79A-473B-97D3-90AA5C1E123E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{677EDC96-D79A-473B-97D3-90AA5C1E123E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{677EDC96-D79A-473B-97D3-90AA5C1E123E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E98A9F13-CD8C-4D65-B65E-91812EF73119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E98A9F13-CD8C-4D65-B65E-91812EF73119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E98A9F13-CD8C-4D65-B65E-91812EF73119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E98A9F13-CD8C-4D65-B65E-91812EF73119}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

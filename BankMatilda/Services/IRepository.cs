@@ -19,10 +19,10 @@ namespace BankMatilda.Services
         public void Transfer(int fromAccountId, int toAccountId, decimal amount);
         public IEnumerable<Data.Disposition> GetAll();
         public Customer GetAllAccountFromCustomer(int id);
-        
         public Account UpdateAccount(Account account);
         public Customer UpdateCustomer(Customer customer);
         public Customer SaveCustomer(Customer customer);
+        public bool CheckIfSufficientBalance(decimal amount, decimal balance);
 
 
 

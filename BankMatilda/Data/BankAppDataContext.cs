@@ -11,7 +11,6 @@ namespace BankMatilda.Data
         public BankAppDataContext(DbContextOptions<BankAppDataContext> options)
             : base(options)
         {
-            Database.SetCommandTimeout((int)TimeSpan.FromMinutes(5).TotalSeconds);
 
         }
 

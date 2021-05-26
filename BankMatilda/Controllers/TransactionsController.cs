@@ -11,9 +11,13 @@ using JW;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
+
+
 namespace BankMatilda.Controllers
 {
+
     [Authorize(Roles = "Admin,Cashier")]
+
     public class TransactionsController : Controller
     {
         private readonly IRepository _repository;
@@ -61,10 +65,18 @@ namespace BankMatilda.Controllers
         [HttpPost]
         public IActionResult Transfer(TransactionTransferViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            var account = _repository.GetAccountById(viewModel.AccountId);
+            if (_repository.CheckIfSufficientBalance(viewModel.AmountToTransfer, account.Balance) == false)
             {
-                _repository.Transfer(viewModel.AccountId, viewModel.ToAccountId, viewModel.AmountToTransfer);
-                return RedirectToAction("Index");
+                ModelState.AddModelError("AmountToTransfer", "There's not enough money on this account for this transfer");
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _repository.Transfer(viewModel.AccountId, viewModel.ToAccountId, viewModel.AmountToTransfer);
+                    return RedirectToAction("Index");
+                }
             }
             return View(viewModel);
         }
@@ -79,11 +91,17 @@ namespace BankMatilda.Controllers
         [HttpPost]
         public IActionResult Withdraw(TransactionWithdrawViewModel viewModel)
         {
+            var account = _repository.GetAccountById(viewModel.AccountId);
+            var sufficient = _repository.CheckIfSufficientBalance(viewModel.AmountToWithdraw, account.Balance);
+            if (!sufficient)
+            {
+                ModelState.AddModelError("AmountToWithdraw", "Amount can not be greater than balance");
+            }
+
             if (ModelState.IsValid)
             {
                 var trans = new Transaction();
-                var account = _repository.GetAccountById(viewModel.AccountId);
-
+                
                 trans.Balance = account.Balance - viewModel.AmountToWithdraw;
                 trans.AccountId = account.AccountId;
                 trans.Date = DateTime.Now.Date;

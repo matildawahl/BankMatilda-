@@ -60,8 +60,6 @@ namespace BankMatilda.Controllers
         public IActionResult Details(int id)
         {
             var viewModel = new CustomerDetailsViewModel();
-            var account = _repository.GetAccountById(id);
-
             var customer = _repository.GetAllAccountFromCustomer(id);
 
             viewModel.Customer = new CustomerDetailsViewModel.CustomerViewModel()
@@ -84,10 +82,10 @@ namespace BankMatilda.Controllers
 
             viewModel.Account = customer.Dispositions.Select(d => new CustomerDetailsViewModel.AccountViewModel
             {
-                AccountId = account.AccountId,
-                Balance = account.Balance,
-                Created = account.Created,
-                Frequency = account.Frequency
+                AccountId = d.Account.AccountId,
+                Balance = d.Account.Balance,
+                Created = d.Account.Created,
+                Frequency = d.Account.Frequency
                 
             }).ToList();
 
@@ -97,9 +95,9 @@ namespace BankMatilda.Controllers
         }
 
 
-       
 
-        [Authorize(Roles = "Cashier")]
+
+        [Authorize(Roles = "Admin,Cashier")]
         public IActionResult EditCustomer(int id)
         {
             var viewModel = new CustomerEditViewModel();
@@ -150,6 +148,7 @@ namespace BankMatilda.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin,Cashier")]
         public IActionResult NewCustomer()
         {
             var viewModel = new CustomerNewViewModel();

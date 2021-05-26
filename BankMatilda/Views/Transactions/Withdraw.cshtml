@@ -2,11 +2,11 @@
 
 <h3>Withdraw</h3>
 <form asp-controller="Transactions" asp-action="Withdraw" method="post">
-    <label>Account Number:</label><br>
+    <label asp-for="AccountId">Account Number:</label><br>
     <input asp-for="AccountId"><br>
     <span asp-validation-for="AccountId"></span>
 
-    <label>Amount:</label><br>
+    <label asp-for="AmountToWithdraw">Amount:</label><br>
     <input asp-for="AmountToWithdraw">
     <span asp-validation-for="AmountToWithdraw"></span>
 

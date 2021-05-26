@@ -18,7 +18,7 @@ namespace BankMatilda.Services
 
         public Account GetAccountById(int id)
         {
-            return _context.Dispositions.Include(a => a.Account).First(a => a.CustomerId == id).Account;
+            return _context.Accounts.FirstOrDefault(a=> a.AccountId==id);
         }
 
         public List<Account> GetCustomerAccounts(int customerId)
@@ -77,34 +77,40 @@ namespace BankMatilda.Services
         {
             var fromAccount = _context.Accounts.First(a => a.AccountId == fromAccountId);
             var toAccount = _context.Accounts.First(a => a.AccountId == toAccountId);
-            
-            var transactionFrom = new Transaction
-            {
-                AccountId = fromAccountId,
-                Date = DateTime.Now,
-                Type = "Debit",
-                Operation = "Transfer to Another account",
-                Balance = fromAccount.Balance - amount,
-                Amount = -amount,
-                Account = toAccount.ToString()
-            };
+            var amountOnAccount = fromAccount.Balance;
 
-            var transactionTo = new Transaction
+            if (amount < amountOnAccount)
             {
-                AccountId = toAccountId,
-                Date = DateTime.Now,
-                Type = "Credit",
-                Operation = "Collection from Another account",
-                Balance = toAccount.Balance + amount,
-                Amount = amount,
-                Account = fromAccountId.ToString()
-            };
-            fromAccount.Balance -= amount;
-            toAccount.Balance += amount;
+                var transactionFrom = new Transaction
+                {
+                    AccountId = fromAccountId,
+                    Date = DateTime.Now,
+                    Type = "Debit",
+                    Operation = "Transfer to Another account",
+                    Balance = fromAccount.Balance - amount,
+                    Amount = -amount,
+                    Account = toAccount.ToString()
+                };
 
-            fromAccount.Transactions.Add(transactionFrom);
-            toAccount.Transactions.Add(transactionTo);
-            _context.SaveChanges();
+                var transactionTo = new Transaction
+                {
+                    AccountId = toAccountId,
+                    Date = DateTime.Now,
+                    Type = "Credit",
+                    Operation = "Collection from Another account",
+                    Balance = toAccount.Balance + amount,
+                    Amount = amount,
+                    Account = fromAccountId.ToString()
+                };
+                fromAccount.Balance -= amount;
+                toAccount.Balance += amount;
+
+                fromAccount.Transactions.Add(transactionFrom);
+                toAccount.Transactions.Add(transactionTo);
+                _context.SaveChanges();
+            }
+           
+
         }
 
         public Customer UpdateCustomer(Customer customer)
@@ -120,7 +126,17 @@ namespace BankMatilda.Services
             _context.SaveChanges();
             return customer;
         }
+
+        public bool CheckIfSufficientBalance(decimal amount, decimal balance)
+        {
+            if (amount > balance)
+            {
+                return false;
+            }
+            return true;
+        }
         
+
 
 
 
